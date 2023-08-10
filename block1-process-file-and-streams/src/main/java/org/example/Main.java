@@ -94,7 +94,7 @@ public class Main {
     public static void main(String[] args) {
         try {
 
-            //TENGO QUE PONER RUTA ABSOLUTA PORQUE CUANDO CREO MODULO NO ES CAPAZ DE ENCONTRAR EL .csv EN RUTA RELATIVA
+
             List<Person> people = readPeopleFromFile("src/main/resources/people.csv");
 
 
