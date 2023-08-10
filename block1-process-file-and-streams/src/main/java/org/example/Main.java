@@ -18,14 +18,6 @@ class Person {
         this.town = town;
         this.age = age;
     }
-
-
-
-    @Override
-    public String toString() {
-        return "Name: " + name + ". Town: " + (town.isEmpty() ? "unknown" : town) + ". Age: " + (age == 0 ? "unknown" : age);
-    }
-
     public String getName() {
         return name;
     }
@@ -37,8 +29,17 @@ class Person {
     public int getAge() {
         return age;
     }
+
+    @Override
+    public String toString() {
+
+        //Uso de operador ternario para devolver unknown en el caso de que esté vacía la columna town y age
+        return "Name: " + name + ". Town: " + (town.isEmpty() ? "unknown" : town) + ". Age: " + (age == 0 ? "unknown" : age);
+    }
+
 }
 
+//Clase para tratar la excepcion
 class InvalidLineFormatException extends Exception {
     public InvalidLineFormatException(String message, Throwable cause) {
         super(message, cause);
@@ -47,7 +48,7 @@ class InvalidLineFormatException extends Exception {
 
 public class Main {
 
-    //Leer fichero y filtrar
+    //Método para leer
     public static List<Person> readPeopleFromFile(String filePath) throws IOException, InvalidLineFormatException {
         List<Person> people = new ArrayList<>();
         List<String> lines = Files.readAllLines(Path.of(filePath));
@@ -92,11 +93,13 @@ public class Main {
     }
 
     public static void main(String[] args) {
+
+
         try {
 
-
-            List<Person> people = readPeopleFromFile("src/main/resources/people.csv");
-
+            //Creación de variable tipo
+            List<Person> people = readPeopleFromFile("people.csv");
+            System.out.println(people.toString());
 
             //Uso de Streams
             // Obtener el primer elemento cuya ciudad sea Madrid
@@ -104,6 +107,7 @@ public class Main {
                     .filter(person -> person.town.equalsIgnoreCase("Madrid"))
                     .findFirst();
 
+            //Imprimir elemento
             firstPersonFromMadrid.ifPresentOrElse(
                     person -> System.out.println("Primer elemento de Madrid: " + person),
                     () -> System.out.println("No hay persona de Madrid.")
