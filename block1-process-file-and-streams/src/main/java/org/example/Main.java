@@ -19,9 +19,23 @@ class Person {
         this.age = age;
     }
 
+
+
     @Override
     public String toString() {
         return "Name: " + name + ". Town: " + (town.isEmpty() ? "unknown" : town) + ". Age: " + (age == 0 ? "unknown" : age);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public int getAge() {
+        return age;
     }
 }
 
@@ -32,6 +46,8 @@ class InvalidLineFormatException extends Exception {
 }
 
 public class Main {
+
+    //Leer fichero y filtrar
     public static List<Person> readPeopleFromFile(String filePath) throws IOException, InvalidLineFormatException {
         List<Person> people = new ArrayList<>();
         List<String> lines = Files.readAllLines(Path.of(filePath));
@@ -55,20 +71,33 @@ public class Main {
 
         return people;
     }
+    public static List<Person> filterPeopleUnder25(List<Person> peopleList) {
+        List<Person> under25List = new ArrayList<>();
+        for (Person person : peopleList) {
+            if (person.getAge() < 25) {
+                under25List.add(person);
+            }
+        }
+        return under25List;
+    }
+
+    public static List<Person> filterPeopleWithoutNameStartingWithA(List<Person> peopleList) {
+        List<Person> noAList = new ArrayList<>();
+        for (Person person : peopleList) {
+            if (!person.getName().startsWith("A")) {
+                noAList.add(person);
+            }
+        }
+        return noAList;
+    }
 
     public static void main(String[] args) {
         try {
 
             //TENGO QUE PONER RUTA ABSOLUTA PORQUE CUANDO CREO MODULO NO ES CAPAZ DE ENCONTRAR EL .csv EN RUTA RELATIVA
-            List<Person> people = readPeopleFromFile("C:/Users/luismiguel.gallego/IdeaProjects/FormacionBackend/block1-process-file-and-streams/people.csv");
+            List<Person> people = readPeopleFromFile("src/main/resources/people.csv");
 
-            // Filtrar personas menores de 25 años y mostrar en la consola
-            List<Person> under25 = people.stream()
-                    .filter(person -> person.age < 25)
-                    .collect(Collectors.toList());
 
-            System.out.println("Personas menores de 25:");
-            under25.forEach(System.out::println);
             //Uso de Streams
             // Obtener el primer elemento cuya ciudad sea Madrid
             Optional<Person> firstPersonFromMadrid = people.stream()
