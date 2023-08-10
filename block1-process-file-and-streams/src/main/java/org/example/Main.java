@@ -58,6 +58,8 @@ public class Main {
 
     public static void main(String[] args) {
         try {
+
+            //TENGO QUE PONER RUTA ABSOLUTA PORQUE CUANDO CREO MODULO NO ES CAPAZ DE ENCONTRAR EL .csv EN RUTA RELATIVA
             List<Person> people = readPeopleFromFile("C:/Users/luismiguel.gallego/IdeaProjects/FormacionBackend/block1-process-file-and-streams/people.csv");
 
             // Filtrar personas menores de 25 años y mostrar en la consola
