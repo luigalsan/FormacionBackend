@@ -71,7 +71,7 @@ public class Main {
 
         return people;
     }
-    public static List<Person> filterPeopleUnder25(List<Person> peopleList) {
+    public static List<Person> filtrarEdad(List<Person> peopleList) {
         List<Person> under25List = new ArrayList<>();
         for (Person person : peopleList) {
             if (person.getAge() < 25) {
@@ -81,7 +81,7 @@ public class Main {
         return under25List;
     }
 
-    public static List<Person> filterPeopleWithoutNameStartingWithA(List<Person> peopleList) {
+    public static List<Person> filtrarLetra(List<Person> peopleList) {
         List<Person> noAList = new ArrayList<>();
         for (Person person : peopleList) {
             if (!person.getName().startsWith("A")) {
