@@ -11,6 +11,7 @@
     <modules>
         <module>block1-process-file-and-streams</module>
         <module>block3-maven-package</module>
+        <module>untitled</module>
     </modules>
 
     <properties>
