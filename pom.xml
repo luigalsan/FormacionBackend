@@ -11,9 +11,8 @@
     <modules>
         <module>block1-process-file-and-streams</module>
         <module>block3-maven-package</module>
-        <module>untitled</module>
         <module>block3-create-repo-git</module>
-        <module>block5-command-line-runner</module>
+
     </modules>
 
     <properties>

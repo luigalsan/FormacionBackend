@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/../../../Public/block5-command-line-runner/untitled/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../../Public/block5-command-line-runner/untitled/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/block1-process-file-and-streams" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/block1-process-file-and-streams/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/block1-process-file-and-streams/src/main/resources" charset="UTF-8" />
@@ -12,6 +10,10 @@
     <file url="file://$PROJECT_DIR$/block3-maven-package/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/block5-command-line-runner/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/block5-command-line-runner/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/block5-command-line-runner/untitled/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/block5-command-line-runner/untitled/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/block5-properties/cargapropiedades/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/block5-properties/cargapropiedades/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/untitled/src/main/java" charset="UTF-8" />
