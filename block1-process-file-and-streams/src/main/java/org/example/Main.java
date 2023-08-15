@@ -25,18 +25,19 @@ public class Main {
                 case 1:
                     for (Person persona : ficheroLeido) {
 
-                        System.out.println("Name: " + persona.getName() + (persona.getTown().isEmpty() ? "Town: unknown. " : "Town: " + persona.getTown()) + "Age: " + persona.getAge());
+                        System.out.println("Name: " + persona.getName() + (persona.getTown().isEmpty() ? ". Town: unknown. " : " Town: " + persona.getTown()) + ". Age: " + persona.getAge());
 
-                            break;
                     }
+                    break;
+
                     case 2:
 
-                    for(Person persona: ficheroFiltrado){
+                        for(Person persona: ficheroFiltrado) {
 
-                        System.out.println("Name: " + persona.getName() + ". Town:" + persona.getTown() + ". Age: " + persona.getAge());
-                        break;
-                    }
+                            System.out.println("Name: " + persona.getName() + ". Town:" + persona.getTown() + ". Age: " + persona.getAge());
 
+                        }
+                    break;
                 case 3:
                     Optional<Person> primeraPersonaDeMadrid = ficheroFiltrado.stream()
                             .filter(persona -> persona.getTown().equals("Madrid"))
