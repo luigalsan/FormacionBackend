@@ -1,135 +1,82 @@
 package org.example;
 
+
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-class Person {
-    String name;
-    String town;
-    int age;
-
-    public Person(String name, String town, int age) {
-        this.name = name;
-        this.town = town;
-        this.age = age;
-    }
-    public String getName() {
-        return name;
-    }
-
-    public String getTown() {
-        return town;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    @Override
-    public String toString() {
-
-        //Uso de operador ternario para devolver unknown en el caso de que esté vacía la columna town y age
-        return "Name: " + name + ". Town: " + (town.isEmpty() ? "unknown" : town) + ". Age: " + (age == 0 ? "unknown" : age);
-    }
-
-}
-
-//Clase para tratar la excepcion
-class InvalidLineFormatException extends Exception {
-    public InvalidLineFormatException(String message, Throwable cause) {
-        super(message, cause);
-    }
-}
 
 public class Main {
 
-    //Método para leer
-    public static List<Person> readPeopleFromFile(String filePath) throws IOException, InvalidLineFormatException {
-        List<Person> people = new ArrayList<>();
-        List<String> lines = Files.readAllLines(Path.of(filePath));
-
-        for (String line : lines) {
-            String[] fields = line.split(":");
-            if (fields.length >= 1) {
-                String name = fields[0].trim();
-                String town = fields.length >= 2 ? fields[1].trim() : "";
-                int age = fields.length >= 3 ? Integer.parseInt(fields[2].trim()) : 0;
-
-                if (name.isEmpty()) {
-                    throw new InvalidLineFormatException("El nombre es necesario.", null);
-                }
-
-                people.add(new Person(name, town, age));
-            } else {
-                throw new InvalidLineFormatException("El formato no es válido: " + line, null);
-            }
-        }
-
-        return people;
-    }
-    public static List<Person> filtrarEdad(List<Person> peopleList) {
-        List<Person> under25List = new ArrayList<>();
-        for (Person person : peopleList) {
-            if (person.getAge() < 25) {
-                under25List.add(person);
-            }
-        }
-        return under25List;
-    }
-
-    public static List<Person> filtrarLetra(List<Person> peopleList) {
-        List<Person> noAList = new ArrayList<>();
-        for (Person person : peopleList) {
-            if (!person.getName().startsWith("A")) {
-                noAList.add(person);
-            }
-        }
-        return noAList;
-    }
-
     public static void main(String[] args) {
-
+        LeerCSV leer = new LeerCSV();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("1. Imprimir fichero sin filtrar.\n" +
+                "2. Filtrar menores de 25.\n" +
+                "3. Obtener el primer elemento cuya ciudad sea Madrid.\n" +
+                "4. Obtener el primer elemento cuya ciudad sea Barcelona ");
 
         try {
+            int opcion = sc.nextInt();
+            List<Person> ficheroLeido = leer.leerFichero();
+            List<Person> ficheroFiltrado = menoresVeinticinco(ficheroLeido);
+            switch(opcion) {
+                case 1:
+                    for (Person persona : ficheroLeido) {
 
-            //Creación de variable tipo
-            List<Person> people = readPeopleFromFile("people.csv");
-            System.out.println(people.toString());
+                        System.out.println("Name: " + persona.getName() + (persona.getTown().isEmpty() ? "Town: unknown. " : "Town: " + persona.getTown()) + "Age: " + persona.getAge());
 
-            //Uso de Streams
-            // Obtener el primer elemento cuya ciudad sea Madrid
-            Optional<Person> firstPersonFromMadrid = people.stream()
-                    .filter(person -> person.town.equalsIgnoreCase("Madrid"))
-                    .findFirst();
+                            break;
+                    }
+                    case 2:
 
-            //Imprimir elemento
-            firstPersonFromMadrid.ifPresentOrElse(
-                    person -> System.out.println("Primer elemento de Madrid: " + person),
-                    () -> System.out.println("No hay persona de Madrid.")
-            );
+                    for(Person persona: ficheroFiltrado){
 
-            // Obtener el primer elemento cuya ciudad sea Barcelona
-            Optional<Person> firstPersonFromBarcelona = people.stream()
-                    .filter(person -> person.town.equalsIgnoreCase("Barcelona"))
-                    .findFirst();
+                        System.out.println("Name: " + persona.getName() + ". Town:" + persona.getTown() + ". Age: " + persona.getAge());
+                        break;
+                    }
 
-            firstPersonFromBarcelona.ifPresentOrElse(
-                    person -> System.out.println("Primer elemento de Barcelona: " + person),
-                    () -> System.out.println("No hay persona de Barcelona.")
-            );
+                case 3:
+                    Optional<Person> primeraPersonaDeMadrid = ficheroFiltrado.stream()
+                            .filter(persona -> persona.getTown().equals("Madrid"))
+                            .findFirst();
+
+                    primeraPersonaDeMadrid.ifPresent(persona -> System.out.println("Primera persona de Madrid: " + persona.getName()));
+
+                    break;
+
+                case 4:
+                    Optional<Person> primeraPersonaDeBarcelona = ficheroLeido.stream()
+                            .filter(persona -> persona.getTown().equals("Barcelona"))
+                            .findFirst();
+
+                    primeraPersonaDeBarcelona.ifPresent(persona -> System.out.println("Primera persona de Barcelona: " + persona.getName()));
+
+                    break;
+
+            }
 
         } catch (IOException e) {
+            System.out.println("Fichero no encontrado");
+
+        } catch (InvalidFormatLineException e) {
             e.printStackTrace();
-        } catch (InvalidLineFormatException e) {
-            System.out.println("Formato de línea no válido: " + e.getMessage());
-            if (e.getCause() != null) {
-                e.getCause().printStackTrace();
-            }
         }
     }
+
+    public static List<Person> menoresVeinticinco(List<Person> personas){
+        List<Person> personasFiltradas = new ArrayList<>();
+
+        for (Person persona : personas) {
+
+            if (persona.getAge() < 25 && persona.getAge() > 0) {
+
+                personasFiltradas.add(persona);
+            }
+        }
+        return personasFiltradas;
+
+    }
 }
+
