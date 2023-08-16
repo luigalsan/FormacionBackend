@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ProfilePRO" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.example.block5profiles.Block5ProfilesApplication" />
+    <module name="block5-profiles" />
+    <option name="VM_PARAMETERS" value="-Dspring.profiles.active=PRO" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

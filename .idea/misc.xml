@@ -9,11 +9,12 @@
         <option value="$PROJECT_DIR$/../../../Public/cargapropiedades/pom.xml" />
         <option value="$PROJECT_DIR$/block5-properties/cargapropiedades/pom.xml" />
         <option value="$PROJECT_DIR$/comman-line-runner/pom.xml" />
+        <option value="$PROJECT_DIR$/block5-command-line-runner/pom.xml" />
+        <option value="$PROJECT_DIR$/block5-profiles/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/block5-command-line-runner/pom.xml" />
         <option value="$PROJECT_DIR$/block5-command-line-runner/untitled/pom.xml" />
         <option value="$PROJECT_DIR$/cargapropiedades/pom.xml" />
       </set>
