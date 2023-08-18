@@ -1,15 +1,26 @@
 package com.bosonit.formacion.cargapropiedades;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @SpringBootApplication
-@Component
 public class CargapropiedadesApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CargapropiedadesApplication.class, args);
+
+	}
+
+}
+
+@Component
+class ejecutarVariables implements CommandLineRunner{
 
 	@Value("${greeting}")
 	private String greeting;
@@ -20,49 +31,25 @@ public class CargapropiedadesApplication {
 	@Value("${new.property}")
 	private String newProperty;
 
-	public static void main(String[] args) {
-		SpringApplication.run(CargapropiedadesApplication.class, args);
+	@Value("${MYURL}")
+	private String myURL;
 
-	}
-
-
-	//Lo ejecuta automáticamente sin estar dentro del main
-	@Bean
-	public void printValues(){
-		System.out.println("El valor de greeting es: " + greeting);
-		System.out.println("El valor de my.number es: " + myNumber);
-		System.out.println("El valor de new.property es: " + newProperty);
-
-		//Acceder a la variable de entorno en mi S.O.
-
-		String myVariableSO= System.getenv("new.property");
-		System.out.println(myVariableSO);
-
-	}
-
-}
-
-@Component
-class ejecutarDesdeCommandLine implements CommandLineRunner{
-
-	public void run(String... run) {
-		System.out.println("Imprimiendo desde el CommandLine Runner");
-
-		String MYURL = System.getenv("MYURL");
-		System.out.println(MYURL);
-
-		String MYURL2 = System.getenv("MYURL2");
-		if(MYURL2.isEmpty() || MYURL2 == null) {
-			if (MYURL2 == null || MYURL2.isEmpty()) {
-				MYURL2 = "NO_tengo_valor";
-			}
-		}
-
-		System.out.println("El valor de MYURL2 es: " + MYURL2);
+	@Value("${MYURL2:NO TENGO VALOR}")
+	private String myURL2;
 
 
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+
+	@Override
+	public void run(String... args) throws Exception {
+		logger.info("Valor de greeting", greeting);
+		logger.info("Valor de mi numero", myNumber);
+		logger.info("Valor de newProperty", newProperty);
+		logger.info("Valor de MYURL", myURL);
+		logger.info("Valor de MYURL2", myURL2);
 
 	}
 
 }
+
 

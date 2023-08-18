@@ -11,6 +11,8 @@
         <option value="$PROJECT_DIR$/comman-line-runner/pom.xml" />
         <option value="$PROJECT_DIR$/block5-command-line-runner/pom.xml" />
         <option value="$PROJECT_DIR$/block5-profiles/pom.xml" />
+        <option value="$PROJECT_DIR$/block6-simple-controllers/pom.xml" />
+        <option value="$PROJECT_DIR$/block5-logging/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
