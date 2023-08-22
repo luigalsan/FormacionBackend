@@ -1,0 +1,34 @@
+<configuration>
+
+    <!-- Appender para la consola -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender para el archivo de errores -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>block5-logging/logs/my-application-error.log</file>
+        <append>true</append>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Nivel de log raíz: solo logs de tipo "Warning" o inferiores van a la consola -->
+    <root level="WARN">
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+    <!-- Logs de tipo "Error" van al archivo de logs de error -->
+    <logger name="com.example.creandoLogs" level="error">
+        <appender-ref ref="ERROR_FILE" />
+    </logger>
+
+</configuration>

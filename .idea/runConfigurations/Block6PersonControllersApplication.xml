@@ -4,7 +4,7 @@
     <module name="block6-person-controllers" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.example.block6personcontrollers.*" />
+        <option name="PATTERN" value="com.example.block6personcontrollers.entity.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

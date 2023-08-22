@@ -4,7 +4,7 @@
     <module name="block6-simple-controllers" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.example.block6simplecontrollers.*" />
+        <option name="PATTERN" value="com.example.block6simplecontrollers.entity.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>

@@ -10,17 +10,11 @@ import org.springframework.http.HttpStatus;
 
 @SpringBootApplication
 @Slf4j
-public class CreandoLogsApplication implements CommandLineRunner {
+public class CreandoLogsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CreandoLogsApplication.class, args);
 	}
 
-	Logger log = LoggerFactory.getLogger(CreandoLogsApplication.class);
 
-	@Override
-	public void run(String... args) throws Exception {
-		log.error("Esto es un error de compilación");
-		log.warn("Esto es un mensaje WARNING");
-	}
 }

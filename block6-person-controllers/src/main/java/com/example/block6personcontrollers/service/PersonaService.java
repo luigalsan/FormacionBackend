@@ -2,7 +2,7 @@ package com.example.block6personcontrollers.service;
 
 
 import org.springframework.stereotype.Service;
-import com.example.block6personcontrollers.Persona;
+import com.example.block6personcontrollers.entity.Persona;
 @Service
 public class PersonaService {
 

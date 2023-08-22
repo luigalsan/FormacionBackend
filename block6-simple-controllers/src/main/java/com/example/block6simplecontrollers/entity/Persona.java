@@ -1,4 +1,4 @@
-package com.example.block6simplecontrollers;
+package com.example.block6simplecontrollers.entity;
 
 import org.springframework.stereotype.Component;
 
@@ -6,16 +6,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class Persona {
     private String nombre;
-    private String poblacion;
+    private String ciudad;
     private int edad;
 
     public Persona() {
     }
 
-    public Persona(String nombre, String poblacion, int edad) {
+    public Persona(String nombre, int edad, String ciudad) {
         this.nombre = nombre;
-        this.poblacion = poblacion;
         this.edad = edad;
+        this.ciudad = ciudad;
+
     }
 
     public String getNombre() {
@@ -27,11 +28,11 @@ public class Persona {
     }
 
     public String getPoblacion() {
-        return poblacion;
+        return ciudad;
     }
 
     public void setPoblacion(String poblacion) {
-        this.poblacion = poblacion;
+        this.ciudad = poblacion;
     }
 
     public int getEdad() {
