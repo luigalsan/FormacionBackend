@@ -1,37 +1,47 @@
 package com.example.block6personcontrollers.rest;
 
+import com.example.block6personcontrollers.entity.Ciudad;
 import com.example.block6personcontrollers.entity.Persona;
+import com.example.block6personcontrollers.service.CiudadService;
 import com.example.block6personcontrollers.service.PersonaService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 
 @RestController
+@RequestMapping("/controlador1")
 public class Controlador1 {
 
     Persona personaControlador1;
+    PersonaService servicioPersona;
+    CiudadService servicioCiudad;
 
-    @Autowired
-    PersonaService servicio;
-
-    public Controlador1(PersonaService servicio){ //Inyección de dependencia servicio mediante constructor
-        this.servicio = servicio;
-
+    public Controlador1(PersonaService servicioPersona, CiudadService servicioCiudad){ //Inyección de dependencias servicios mediante constructor
+        this.servicioPersona = servicioPersona;
+        this.servicioCiudad = servicioCiudad;
     }
 
-    @GetMapping("/controlador1/addPersona")
+    @GetMapping("/addPersona")
     public Persona getPersona(
             @RequestHeader String nombre,
             @RequestHeader String poblacion,
             @RequestHeader int edad){
 
-        personaControlador1 = servicio.crearPersona(nombre, poblacion, edad);
+        personaControlador1 = servicioPersona.crearPersona(nombre, poblacion, edad);
 
         return personaControlador1;
     }
+
+    @PostMapping("/addCiudad")
+    public void addCiudad(@RequestBody Ciudad ciudad){
+        servicioCiudad.addCiudad(ciudad);
+    }
+
+    @GetMapping("/getCiudades")
+    public List<Ciudad> getCiudad(){
+        return servicioCiudad.getCiudades();
+    }
+
 
     public Persona getPersonaControlador1(){
 

@@ -1,9 +1,5 @@
 package com.example.block6personcontrollers.entity;
 
-
-import org.springframework.stereotype.Component;
-
-@Component
 public class Persona {
 
     String nombre;
@@ -18,7 +14,6 @@ public class Persona {
         this.poblacion = poblacion;
         this.edad = edad;
     }
-
 
     public String getNombre() {
         return nombre;
