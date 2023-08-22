@@ -10,17 +10,14 @@ public class Terciaria {
     public Terciaria(){
 
     }
-
-
-
     //LOS MENSAJES DE CommandLineRunner se ejecutarán al final
     @Bean
     public CommandLineRunner terceraFuncion(){
-        return args -> {
-            if (args.length > 0) {
+        return p -> {
+            if (p.length > 0) {
                 System.out.println("Hola desde la clase tercera");
                 System.out.println("Valores pasados como parámetro:");
-                for (String valores : args) {
+                for (String valores : p) {
                     System.out.println(valores);
                 }
             } else {

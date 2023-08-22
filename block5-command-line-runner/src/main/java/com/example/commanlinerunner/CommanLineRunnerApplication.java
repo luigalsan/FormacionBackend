@@ -19,7 +19,7 @@ public class CommanLineRunnerApplication{
 		System.out.println(clase3.terceraFuncion());
 	}
 
-	@PostConstruct
+	@PostConstruct //Se ejecutará una vez que se hayan construido el bean y todas las dependencias hayan sido inyectadas
 	public void primeraFuncion(){
 		System.out.println("Hola desde la clase inicial");
 	}
