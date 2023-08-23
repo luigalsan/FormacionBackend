@@ -12,7 +12,6 @@ import java.util.List;
 @RequestMapping("/controlador1")
 public class Controlador1 {
 
-    Persona personaControlador1;
     PersonaService servicioPersona;
     CiudadService servicioCiudad;
 
@@ -27,9 +26,7 @@ public class Controlador1 {
             @RequestHeader String poblacion,
             @RequestHeader int edad){
 
-        personaControlador1 = servicioPersona.crearPersona(nombre, poblacion, edad);
-
-        return personaControlador1;
+        return servicioPersona.crearPersona(nombre, poblacion, edad);
     }
 
     @PostMapping("/addCiudad")
@@ -42,11 +39,6 @@ public class Controlador1 {
         return servicioCiudad.getCiudades();
     }
 
-
-    public Persona getPersonaControlador1(){
-
-        return personaControlador1;
-    }
 
 }
 

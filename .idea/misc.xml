@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
@@ -15,6 +14,7 @@
         <option value="$PROJECT_DIR$/block5-logging/pom.xml" />
         <option value="$PROJECT_DIR$/block6-person-controllers/pom.xml" />
         <option value="$PROJECT_DIR$/EjerciciosComplementarios/profilesInterfaces/pom.xml" />
+        <option value="$PROJECT_DIR$/block6-path-variable-headers/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
