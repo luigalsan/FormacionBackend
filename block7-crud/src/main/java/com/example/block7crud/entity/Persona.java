@@ -10,7 +10,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PERSONA")
+//@Table(name = "PERSONA") Se puede especifica otro nombre para la tabla, por defecto se llamará como el nombre de la clase actual
 public class Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
