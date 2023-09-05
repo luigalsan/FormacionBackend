@@ -69,7 +69,7 @@ public class Controller {
     public ResponseEntity<?> deletePersona(@PathVariable int id) {
         try {
             personaServiceImpl.deletePersonaById(id);
-            return ResponseEntity.ok().body("La persona con el " + id + "ha sido eliminada correctamente");
+            return ResponseEntity.ok().body("El usuario con id: " + id + " ha sido eliminada correctamente");
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
         }
