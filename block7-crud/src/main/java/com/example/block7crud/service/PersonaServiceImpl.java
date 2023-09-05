@@ -25,7 +25,7 @@ public class PersonaServiceImpl implements PersonaService{
     }
     @Override
     public void deletePersonaById(int id) {
-        personaRepository.findById(id).orElseThrow();
+        personaRepository.findById(id).orElseThrow(); //Esta línea para comprobar que existe el ID
         personaRepository.deleteById(id);
     }
 

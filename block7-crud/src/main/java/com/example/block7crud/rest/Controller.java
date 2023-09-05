@@ -24,7 +24,7 @@ public class Controller {
 
         return ResponseEntity.created(location).body(personServiceImpl.addPersona(persona));
     }
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<PersonaOutputDTO> updatePersona(@RequestBody PersonaInputDTO persona){
         try {
             personServiceImpl.getPersonaById(persona.getId()); //Obtengo el Id del objeto persona en POJO previamente serializado desde un JSON
