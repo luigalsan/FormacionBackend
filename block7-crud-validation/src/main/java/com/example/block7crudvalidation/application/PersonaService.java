@@ -8,5 +8,7 @@ public interface PersonaService {
     PersonaOutputDTO getPersonaById(int id);
     PersonaOutputDTO getPersonaByUsuario(String usuario);
     Iterable<PersonaOutputDTO> getAllStudents(int pageNumber, int pageSize);
+    PersonaOutputDTO updatePersona(PersonaInputDTO persona);
 
+    void deletePersonaById(int id);
 }
