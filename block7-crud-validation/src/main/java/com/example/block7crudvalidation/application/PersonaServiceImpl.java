@@ -7,6 +7,7 @@ import com.example.block7crudvalidation.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 
 import java.util.List;
@@ -57,6 +58,7 @@ public class PersonaServiceImpl implements PersonaService {
     public PersonaOutputDTO getPersonaById(int id) {
             return personaRepository.findById(id).orElseThrow().personaToPersonaOutputDto();
     }
+
     @Override
     public PersonaOutputDTO getPersonaByUsuario(String usuario) {
        return personaRepository.findAll().stream()

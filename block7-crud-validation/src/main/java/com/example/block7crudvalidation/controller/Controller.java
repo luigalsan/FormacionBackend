@@ -5,6 +5,8 @@ import com.example.block7crudvalidation.application.PersonaServiceImpl;
 import com.example.block7crudvalidation.controller.dto.PersonaInputDTO;
 import com.example.block7crudvalidation.controller.dto.PersonaOutputDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
@@ -17,15 +19,23 @@ public class Controller {
     PersonaServiceImpl personaServiceImpl;
 
     @GetMapping("/{id}")
-    PersonaOutputDTO getPersonById(@PathVariable int id){
-        try{
-            return personaServiceImpl.getPersonaById(id);
-        }catch(NoSuchElementException e){
-            System.out.println("No se ha encontrado el elemento");
+    public ResponseEntity<PersonaOutputDTO> findPersonById(@PathVariable int id){
+        try {
+            return ResponseEntity.ok().body(personaServiceImpl.getPersonaById(id));
+        }catch(Exception e){
+            return ResponseEntity.notFound().build();
         }
-        return null;
     }
 
+    @GetMapping("/usuario/{usuario}")
+    public ResponseEntity<PersonaOutputDTO> findPersonByUsuario(@PathVariable String usuario){
+        try{
+            return ResponseEntity.ok().body(personaServiceImpl.getPersonaByUsuario(usuario));
+        }catch(Exception e){
+            return ResponseEntity.notFound().build();
+        }
+
+    }
     @PostMapping()
     PersonaOutputDTO addPersona(@RequestBody PersonaInputDTO persona) throws Exception {
             return personaServiceImpl.addPersona(persona);
