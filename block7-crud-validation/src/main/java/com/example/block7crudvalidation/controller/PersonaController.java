@@ -55,21 +55,23 @@ public class PersonaController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<?> updatePersona(@RequestBody PersonaInputDTO persona) {
-        try {
-            personaServiceImpl.getPersonaById(persona.getId_persona()); //Obtengo el Id del objeto persona en POJO previamente serializado desde un JSON
-            return ResponseEntity.ok().body(personaServiceImpl.addPersona(persona));
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
-        }
-    }
+
+//    //CAMBIAR PORQUE NO USO EL UPDATE
+//    @PutMapping
+//    public ResponseEntity<?> updatePersona(@RequestBody PersonaInputDTO persona) {
+//        try {
+//            personaServiceImpl.getPersonaById(persona.getId_persona()); //Obtengo el Id del objeto persona en POJO previamente serializado desde un JSON
+//            return ResponseEntity.ok().body(personaServiceImpl.addPersona(persona));
+//        } catch (EntityNotFoundException e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
+//        }
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePersona(@PathVariable Integer id) {
         try {
             personaServiceImpl.deletePersonaById(id);
-            return ResponseEntity.ok().body("El usuario con id: " + id + " ha sido eliminada correctamente");
+            return ResponseEntity.ok().body("El usuario con id " + id + " ha sido eliminada correctamente");
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
         }

@@ -1,6 +1,5 @@
 package com.example.block7crudvalidation.entity;
 
-import com.example.block7crudvalidation.controller.dto.Student.StudentInputDTO;
 import com.example.block7crudvalidation.controller.dto.Student.StudentOutputDtoFull;
 import com.example.block7crudvalidation.controller.dto.Student.StudentOutputDtoSimple;
 import jakarta.persistence.*;
@@ -37,7 +36,7 @@ public class Student {
     @JoinColumn(name = "id_asignatura")
     private Asignatura asignatura;
 
-    public Student(StudentInputDTO studentInputDTO){
+    public Student(StudentOutputDtoSimple studentInputDTO){
 
         this.id_student = studentInputDTO.getId_student();
         this.num_hours_week =studentInputDTO.getNum_hours_week();
@@ -51,7 +50,8 @@ public class Student {
           this.id_student,
           this.num_hours_week,
           this.comments,
-                this.branch
+                this.branch,
+                this.persona.getId_persona()
         );
     }
 

@@ -1,7 +1,7 @@
 package com.example.block7crudvalidation.controller;
 
 import com.example.block7crudvalidation.application.impl.StudentServiceImpl;
-import com.example.block7crudvalidation.controller.dto.Student.StudentInputDTO;
+import com.example.block7crudvalidation.controller.dto.Student.StudentOutputDtoSimple;
 import com.example.block7crudvalidation.error.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ public class StudentController {
     StudentServiceImpl studentServiceImpl;
 
     @PostMapping
-    public ResponseEntity<Object> addStudent(@RequestBody StudentInputDTO studentInputDTO){
+    public ResponseEntity<?> addStudent(@RequestBody StudentOutputDtoSimple studentInputDTO){
         try{
             return ResponseEntity.ok().body(studentServiceImpl.addStudent(studentInputDTO));
         }catch(EntityNotFoundException e){
@@ -25,7 +25,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getStudentById(@PathVariable Integer id, @RequestParam(value = "outputType", defaultValue = "simple") String ouputType){
+    public ResponseEntity<?> getStudentById(@PathVariable Integer id, @RequestParam(value = "outputType", defaultValue = "simple") String ouputType){
         if(ouputType.equals("simple")){
             try{
                 return ResponseEntity.ok(studentServiceImpl.getStudentByIdSimple(id));
@@ -38,6 +38,26 @@ public class StudentController {
             }catch(EntityNotFoundException e){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
             }
+        }
+    }
+
+//    @PutMapping
+//    public ResponseEntity<?> updatePersona(@RequestBody StudentOutputDtoSimple studentInputDTO) {
+//        try {
+//            studentServiceImpl.getStudentByIdSimple(studentInputDTO.getId_student()); //Obtengo el Id del objeto persona en POJO previamente serializado desde un JSON
+//            return ResponseEntity.ok().body(studentServiceImpl.addStudent(studentInputDTO));
+//        } catch (EntityNotFoundException e) {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
+//        }
+//    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteStudentById(Integer id){
+        try {
+            studentServiceImpl.deleteStudentById(id);
+            return ResponseEntity.ok().body("El estudiante con id " + id + " ha sido eliminada correctamente");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
         }
     }
 }

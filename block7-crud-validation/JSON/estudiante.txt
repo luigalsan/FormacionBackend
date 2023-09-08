@@ -1,0 +1,23 @@
+{
+    "id_student": 1,
+    "num_hours_week": 20,
+    "comments": "Comentarios del estudiante",
+    "branch": "Backend",
+    "id_persona": 3
+}
+
+{
+    "id_student": 2,
+    "num_hours_week": 20,
+    "comments": "Comentarios del estudiante",
+    "branch": "Front",
+    "id_persona": 3
+}
+
+{
+    "id_student": 3,
+    "num_hours_week": 20,
+    "comments": "Comentarios del estudiante",
+    "branch": "DevOps",
+    "id_persona": 3
+}

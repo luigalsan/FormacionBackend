@@ -1,6 +1,8 @@
 package com.example.block7crudvalidation.entity;
 
 
+import com.example.block7crudvalidation.controller.dto.Profesor.ProfesorInputDTO;
+import com.example.block7crudvalidation.controller.dto.Profesor.ProfesorOutputDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,8 +23,26 @@ public class Profesor {
     @JoinColumn(name="id_persona", nullable = false, unique = true)
     Persona persona;
     private String comments;
-
+    private String branch;
     @OneToMany(mappedBy = "profesor")
     private Set<Student> students;
+
+
+    public Profesor(ProfesorInputDTO profesorInputDTO){
+
+        this.id_profesor = profesorInputDTO.getId_profesor();
+        this.comments = profesorInputDTO.getComments();
+        this.branch = profesorInputDTO.getBranch();
+    }
+
+    public ProfesorOutputDTO profesorToOutPutDto(){
+
+        return new ProfesorOutputDTO(
+                this.id_profesor,
+                this.comments,
+                this.branch,
+                this.persona.getId_persona()
+        );
+    }
 
 }

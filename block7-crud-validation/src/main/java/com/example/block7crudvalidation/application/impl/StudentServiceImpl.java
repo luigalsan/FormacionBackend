@@ -1,7 +1,6 @@
 package com.example.block7crudvalidation.application.impl;
 
 import com.example.block7crudvalidation.application.StudentService;
-import com.example.block7crudvalidation.controller.dto.Student.StudentInputDTO;
 import com.example.block7crudvalidation.controller.dto.Student.StudentOutputDtoFull;
 import com.example.block7crudvalidation.controller.dto.Student.StudentOutputDtoSimple;
 import com.example.block7crudvalidation.entity.Persona;
@@ -10,7 +9,10 @@ import com.example.block7crudvalidation.error.EntityNotFoundException;
 import com.example.block7crudvalidation.repository.PersonaRepository;
 import com.example.block7crudvalidation.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -21,7 +23,7 @@ public class StudentServiceImpl implements StudentService {
     StudentRepository studentRepository;
 
     @Override
-    public StudentOutputDtoFull addStudent(StudentInputDTO studentInputDTO) {
+    public StudentOutputDtoFull addStudent(StudentOutputDtoSimple studentInputDTO) {
         //Manejar excepciones en número de horas y branch
         if (studentInputDTO.getNum_hours_week() == 0) {
             throw new EntityNotFoundException("El número de horas no puede ser 0");
@@ -56,12 +58,19 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentOutputDtoSimple updateStudent(StudentInputDTO studentInputDTO) {
-        //Comprobar si el estudiante existe
-        studentRepository.findById(studentInputDTO.getId_student())
-                .orElseThrow();
-       return studentRepository.save(new Student(studentInputDTO)).toStudentOutputDtoSimple();
+    public List<StudentOutputDtoSimple> getAllStudents(int pageNumber, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        return studentRepository.findAll(pageRequest).getContent().stream()
+                .map(Student::toStudentOutputDtoSimple).toList();
     }
+
+//    @Override
+//    public StudentOutputDtoSimple updateStudent(StudentOutputDtoSimple studentInputDTO) {
+//        //Comprobar si el estudiante existe
+//        studentRepository.findById(studentInputDTO.getId_student())
+//                .orElseThrow();
+//       return studentRepository.save(new Student(studentInputDTO)).toStudentOutputDtoSimple();
+//    }
 
     @Override
     public void deleteStudentById(Integer id) {

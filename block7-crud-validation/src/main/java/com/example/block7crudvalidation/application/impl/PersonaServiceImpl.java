@@ -47,6 +47,7 @@ public class PersonaServiceImpl implements PersonaService {
 
         //Comprobar si existe el usuario en la base de datos o no
 
+        //Esto podría ahorrarmelo porque ya existe un método que lo comprueba
        boolean existe = personaRepository.findAll().stream().anyMatch(p -> p.getUsuario().equals(persona.getUsuario()));
        if(!existe){
            return personaRepository.save(new Persona(persona)).personaToPersonaOutputDto();
@@ -74,13 +75,13 @@ public class PersonaServiceImpl implements PersonaService {
                 .stream()
                 .map(Persona::personaToPersonaOutputDto).toList();
     }
-    @Override
-    public PersonaOutputDTO updatePersona(PersonaInputDTO persona) {
-        personaRepository.findById(persona.getId_persona()).orElseThrow();
-
-        return personaRepository.save(new Persona(persona))
-                .personaToPersonaOutputDto();
-    }
+//    @Override
+//    public PersonaOutputDTO updatePersona(PersonaInputDTO persona) {
+//        personaRepository.findById(persona.getId_persona()).orElseThrow();
+//
+//        return personaRepository.save(new Persona(persona))
+//                .personaToPersonaOutputDto();
+//    }
     @Override
     public void deletePersonaById(Integer id) {
 
@@ -88,6 +89,5 @@ public class PersonaServiceImpl implements PersonaService {
                 orElseThrow(() -> new EntityNotFoundException("No se encontró el id: " + id + "para poder eliminar el elemento")).getId_persona();
         personaRepository.deleteById(idUsuarioEliminado);
     }
-
 
 }
