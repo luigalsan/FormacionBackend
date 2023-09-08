@@ -25,14 +25,14 @@ public class Controller {
         return ResponseEntity.created(location).body(personServiceImpl.addPersona(persona));
     }
     @PutMapping
-    public ResponseEntity<PersonaOutputDTO> updatePersona(@RequestBody PersonaInputDTO persona){
-        try {
-            personServiceImpl.getPersonaById(persona.getId()); //Obtengo el Id del objeto persona en POJO previamente serializado desde un JSON
-            return  ResponseEntity.ok().body(personServiceImpl.addPersona(persona));
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    public ResponseEntity<PersonaOutputDTO> updatePersona(@RequestBody PersonaInputDTO persona){
+//        try {
+//            personServiceImpl.getPersonaById(persona.getId()); //Obtengo el Id del objeto persona en POJO previamente serializado desde un JSON
+//            return  ResponseEntity.ok().body(personServiceImpl.addPersona(persona));
+//        } catch (Exception e) {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<PersonaOutputDTO> deletePersona(@PathVariable int id){
