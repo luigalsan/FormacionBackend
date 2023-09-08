@@ -1,7 +1,8 @@
-package com.example.block7crudvalidation.application;
+package com.example.block7crudvalidation.application.impl;
 
-import com.example.block7crudvalidation.controller.dto.PersonaInputDTO;
-import com.example.block7crudvalidation.controller.dto.PersonaOutputDTO;
+import com.example.block7crudvalidation.application.PersonaService;
+import com.example.block7crudvalidation.controller.dto.Persona.PersonaInputDTO;
+import com.example.block7crudvalidation.controller.dto.Persona.PersonaOutputDTO;
 import com.example.block7crudvalidation.entity.Persona;
 import com.example.block7crudvalidation.error.EntityNotFoundException;
 import com.example.block7crudvalidation.error.UnprocessableEntityException;
@@ -53,7 +54,7 @@ public class PersonaServiceImpl implements PersonaService {
        throw new UnprocessableEntityException("El usuario existe");
     }
     @Override
-    public PersonaOutputDTO getPersonaById(int id) {
+    public PersonaOutputDTO getPersonaById(Integer id) {
             return personaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No se encontro el registro con ID: " + id))
                     .personaToPersonaOutputDto();
     }
@@ -67,7 +68,7 @@ public class PersonaServiceImpl implements PersonaService {
                .personaToPersonaOutputDto();
     }
     @Override
-    public List<PersonaOutputDTO> getAllStudents(int pageNumber, int pageSize) {
+    public List<PersonaOutputDTO> getAllPersonas(int pageNumber, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
         return personaRepository.findAll(pageRequest).getContent()
                 .stream()
@@ -75,16 +76,16 @@ public class PersonaServiceImpl implements PersonaService {
     }
     @Override
     public PersonaOutputDTO updatePersona(PersonaInputDTO persona) {
-        personaRepository.findById(persona.getId()).orElseThrow();
+        personaRepository.findById(persona.getId_persona()).orElseThrow();
 
         return personaRepository.save(new Persona(persona))
                 .personaToPersonaOutputDto();
     }
     @Override
-    public void deletePersonaById(int id) {
+    public void deletePersonaById(Integer id) {
 
         int idUsuarioEliminado = personaRepository.findById(id).
-                orElseThrow(() -> new EntityNotFoundException("No se encontró el id: " + id + "para poder eliminar el elemento")).getId();
+                orElseThrow(() -> new EntityNotFoundException("No se encontró el id: " + id + "para poder eliminar el elemento")).getId_persona();
         personaRepository.deleteById(idUsuarioEliminado);
     }
 

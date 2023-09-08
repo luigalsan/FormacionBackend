@@ -1,4 +1,4 @@
-package com.example.block7crudvalidation.controller.dto;
+package com.example.block7crudvalidation.controller.dto.Persona;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Temporal;
@@ -14,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class PersonaOutputDTO {
 
-    private int id;
+    private Integer id_persona;
     private String name;
     private String surname;
     private String company_email;

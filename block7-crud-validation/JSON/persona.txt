@@ -1,0 +1,45 @@
+
+{
+  "id_persona": 1,
+  "usuario": "Luis Mi",
+  "password": "1234",
+  "name": "Luis",
+  "surname": "Gallego", // Aquí debes usar "surname" en lugar de "apellido"
+  "company_email": "lgalsan@bosonit.com",
+  "personal_email": "lgalsan@gmail.com",
+  "city": "Sevilla",
+  "active": true,
+  "created_date": "2023-09-07",
+  "imagen_url": "luis.imagen.url.com",
+  "termination_date": "2023-09-14"
+}
+
+{
+  "id_persona": 2,
+  "usuario": "Laura Cab",
+  "password": "1234",
+  "name": "Laura",
+  "surname": "Cabezas", // Aquí debes usar "surname" en lugar de "apellido"
+  "company_email": "lauraCabezas@telefonica.com",
+  "personal_email": "lauraCabezas@gmail.com",
+  "city": "Sevilla",
+  "active": true,
+  "created_date": "2023-09-07",
+  "imagen_url": "laura.imagen.url.com",
+  "termination_date": "2023-09-14"
+}
+
+{
+  "id_persona": 3,
+  "usuario": "Cristian Cala",
+  "password": "1234",
+  "name": "Cristian",
+  "surname": "Cala", // Aquí debes usar "surname" en lugar de "apellido"
+  "company_email": "cristianCala@telefonica.com",
+  "personal_email": "cristianCala@gmail.com",
+  "city": "Sevilla",
+  "active": true,
+  "created_date": "2023-09-07",
+  "imagen_url": "cristian.imagen.url.com",
+  "termination_date": "2023-09-14"
+}

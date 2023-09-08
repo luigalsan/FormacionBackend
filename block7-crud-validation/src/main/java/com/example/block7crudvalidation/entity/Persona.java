@@ -1,8 +1,7 @@
 package com.example.block7crudvalidation.entity;
 
-import com.example.block7crudvalidation.controller.dto.PersonaInputDTO;
-import com.example.block7crudvalidation.controller.dto.PersonaOutputDTO;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.block7crudvalidation.controller.dto.Persona.PersonaInputDTO;
+import com.example.block7crudvalidation.controller.dto.Persona.PersonaOutputDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,31 +17,40 @@ import java.util.Date;
 public class Persona {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Integer id_persona;
     @Column(nullable = false)
     private String usuario;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String name;
+    @Column(name = "apellido")
     private String surname;
-    @Column(nullable = false)
+    @Column(name = "email_compania", nullable = false)
     private String company_email;
-    @Column(nullable = false)
+    @Column(name = "email_personal", nullable = false)
     private String personal_email;
-    @Column(nullable = false)
+    @Column(name = "ciudad", nullable = false)
     private String city;
     @Column(nullable = false)
     private boolean active;
     @Temporal(TemporalType.DATE)
+    @Column(name="fecha_creacion", nullable = false)
     private Date created_date;
     private String imagen_url;
     @Temporal(TemporalType.DATE)
+    @Column(name="fecha_terminacion")
     private Date termination_date;
 
+    @OneToOne
+    private Student student;
+
+    @OneToOne
+    private Profesor profesor;
+
     public Persona(PersonaInputDTO personaInputDTO){
-        this.id = personaInputDTO.getId();
+        this.id_persona = personaInputDTO.getId_persona();
         this.usuario = personaInputDTO.getUsuario();
         this.password = personaInputDTO.getPassword();
         this.name = personaInputDTO.getName();
@@ -60,7 +68,7 @@ public class Persona {
     public PersonaOutputDTO personaToPersonaOutputDto(){
 
         return new PersonaOutputDTO(
-            this.id,
+            this.id_persona,
             this.name,
             this.surname,
             this.company_email,

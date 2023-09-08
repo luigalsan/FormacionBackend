@@ -1,4 +1,4 @@
-package com.example.block7crudvalidation.controller.dto;
+package com.example.block7crudvalidation.controller.dto.Persona;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -15,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class PersonaInputDTO {
 
-    private int id;
+    private Integer id_persona;
     private String usuario;
     private String password;
     private String name;
