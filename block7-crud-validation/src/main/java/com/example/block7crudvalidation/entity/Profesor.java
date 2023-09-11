@@ -4,14 +4,13 @@ package com.example.block7crudvalidation.entity;
 import com.example.block7crudvalidation.controller.dto.Profesor.ProfesorInputDTO;
 import com.example.block7crudvalidation.controller.dto.Profesor.ProfesorOutputDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "profesor")

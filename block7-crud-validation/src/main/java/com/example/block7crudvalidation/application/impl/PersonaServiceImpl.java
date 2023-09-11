@@ -3,6 +3,8 @@ package com.example.block7crudvalidation.application.impl;
 import com.example.block7crudvalidation.application.PersonaService;
 import com.example.block7crudvalidation.controller.dto.Persona.PersonaInputDTO;
 import com.example.block7crudvalidation.controller.dto.Persona.PersonaOutputDTO;
+import com.example.block7crudvalidation.controller.dto.Persona.PersonaProfesorOutputDto;
+import com.example.block7crudvalidation.controller.dto.Persona.PersonaStudentOutputDto;
 import com.example.block7crudvalidation.entity.Persona;
 import com.example.block7crudvalidation.error.EntityNotFoundException;
 import com.example.block7crudvalidation.error.UnprocessableEntityException;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonaServiceImpl implements PersonaService {
@@ -54,20 +57,49 @@ public class PersonaServiceImpl implements PersonaService {
        }
        throw new UnprocessableEntityException("El usuario existe");
     }
+
+
     @Override
-    public PersonaOutputDTO getPersonaById(Integer id) {
-            return personaRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No se encontro el registro con ID: " + id))
-                    .personaToPersonaOutputDto();
+    public Object getPersonaId(Integer id, String param) {
+
+        switch(param){
+            case "alumno":
+                return personaRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado la persona con el id " + id)).personaToPersonaStudentDto();
+            case "profesor":
+                return personaRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado la persona con el id " + id)).personaToPersonaProfesorDto();
+            default:
+                return personaRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado la persona con el id "+ id)).personaToPersonaOutputDto();
+        }
     }
 
     @Override
-    public PersonaOutputDTO getPersonaByUsuario(String usuario) {
-       return personaRepository.findAll().stream()
-               .filter(persona -> persona.getUsuario()
-                       .equals(usuario)).findFirst()
-               .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario: " + usuario))
-               .personaToPersonaOutputDto();
+    public Object getPersonaByUsuario(String usuario, String param) {
+
+        switch(param){
+            case "alumno":
+                return personaRepository.findAll().stream()
+                        .filter(persona -> persona.getUsuario()
+                                .equals(usuario)).findFirst()
+                        .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario: " + usuario))
+                        .personaToPersonaStudentDto();
+            case "profesor":
+                return personaRepository.findAll().stream()
+                        .filter(persona -> persona.getUsuario()
+                                .equals(usuario)).findFirst()
+                        .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario: " + usuario))
+                        .personaToPersonaProfesorDto();
+            default:
+                return personaRepository.findAll().stream()
+                        .filter(persona -> persona.getUsuario()
+                                .equals(usuario)).findFirst()
+                        .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario: " + usuario))
+                        .personaToPersonaOutputDto();
+        }
     }
+
     @Override
     public List<PersonaOutputDTO> getAllPersonas(int pageNumber, int pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
@@ -75,13 +107,27 @@ public class PersonaServiceImpl implements PersonaService {
                 .stream()
                 .map(Persona::personaToPersonaOutputDto).toList();
     }
-//    @Override
-//    public PersonaOutputDTO updatePersona(PersonaInputDTO persona) {
-//        personaRepository.findById(persona.getId_persona()).orElseThrow();
-//
-//        return personaRepository.save(new Persona(persona))
-//                .personaToPersonaOutputDto();
-//    }
+
+
+    @Override
+    public PersonaOutputDTO updatePersona(PersonaInputDTO personaInputDTO) {
+
+        Persona persona = personaRepository.findById(personaInputDTO.getId_persona())
+                .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado la persona con el Id " + personaInputDTO.getId_persona()));
+
+        persona.setName(personaInputDTO.getName());
+        persona.setSurname(personaInputDTO.getSurname());
+        persona.setCompany_email(personaInputDTO.getCompany_email());
+        persona.setPersonal_email(personaInputDTO.getPersonal_email());
+        persona.setCity(personaInputDTO.getCity());
+        persona.setActive(personaInputDTO.isActive());
+        persona.setCreated_date(personaInputDTO.getCreated_date());
+        persona.setImagen_url(personaInputDTO.getImagen_url());
+        persona.setTermination_date(personaInputDTO.getTermination_date());
+
+        return personaRepository.save(persona).personaToPersonaOutputDto();
+    }
+
     @Override
     public void deletePersonaById(Integer id) {
 

@@ -2,6 +2,8 @@ package com.example.block7crudvalidation.entity;
 
 import com.example.block7crudvalidation.controller.dto.Persona.PersonaInputDTO;
 import com.example.block7crudvalidation.controller.dto.Persona.PersonaOutputDTO;
+import com.example.block7crudvalidation.controller.dto.Persona.PersonaProfesorOutputDto;
+import com.example.block7crudvalidation.controller.dto.Persona.PersonaStudentOutputDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -78,6 +80,45 @@ public class Persona {
             this.created_date,
             this.imagen_url,
             this.termination_date
+        );
+    }
+
+    //Métodos para convertir los inputDtoPersona a inputDtoPersonaEstudiante o inputDtoPersonaProfesor según parámetro
+
+    public PersonaStudentOutputDto personaToPersonaStudentDto(){
+        return new PersonaStudentOutputDto(
+                this.id_persona,
+                this.name,
+                this.surname,
+                this.company_email,
+                this.personal_email,
+                this.city,
+                this.active,
+                this.created_date,
+                this.imagen_url,
+                this.termination_date,
+                this.student.getId_student(),
+                this.student.getNum_hours_week(),
+                this.student.getComments(),
+                this.student.getBranch()
+        );
+    }
+
+    public PersonaProfesorOutputDto personaToPersonaProfesorDto(){
+        return new PersonaProfesorOutputDto(
+                this.id_persona,
+                this.name,
+                this.surname,
+                this.company_email,
+                this.personal_email,
+                this.city,
+                this.active,
+                this.created_date,
+                this.imagen_url,
+                this.termination_date,
+                this.profesor.getId_profesor(),
+                this.profesor.getComments(),
+                this.profesor.getBranch()
         );
     }
 }

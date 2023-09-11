@@ -1,16 +1,17 @@
 package com.example.block7crudvalidation.entity;
 
+import com.example.block7crudvalidation.controller.dto.Asignatura.AsignaturaInputDTO;
+import com.example.block7crudvalidation.controller.dto.Asignatura.AsignaturaOutputDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "asignatura")
@@ -19,12 +20,34 @@ public class Asignatura {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id_asignatura;
+    private String asignatura;
     private String comments;
     @Column(name = "fecha_inicial", nullable = false)
     private Date initial_date;
     @Column(name = "fecha final")
     private Date finish_date;
 
-    @OneToMany(mappedBy = "asignatura")
-    private Set<Student> students;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_student", nullable = false, unique = true)
+    private Student student;
+
+    public Asignatura(AsignaturaInputDTO asignaturaInputDTO){
+        this.id_asignatura = asignaturaInputDTO.getId_asignatura();
+        this.asignatura = asignaturaInputDTO.getAsignatura();
+        this.comments = asignaturaInputDTO.getComment();
+        this.initial_date = asignaturaInputDTO.getInitial_date();
+        this.finish_date = asignaturaInputDTO.getFinish_date();
+    }
+
+    public AsignaturaOutputDTO asignaturaToOutputDto(){
+        return new AsignaturaOutputDTO(
+                this.id_asignatura,
+                this.student.getId_student(),
+                this.comments,
+                this.asignatura,
+                this.initial_date,
+                this.finish_date
+
+        );
+    }
 }

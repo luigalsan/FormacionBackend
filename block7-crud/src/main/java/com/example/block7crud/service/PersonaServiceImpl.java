@@ -29,13 +29,16 @@ public class PersonaServiceImpl implements PersonaService{
         personaRepository.deleteById(id);
     }
 
-//    @Override
-//    public PersonaOutputDTO updatePersona(PersonaInputDTO persona) {
-//        personaRepository.findById(persona.getId()).orElseThrow();
-//
-//        return personaRepository.save(new Persona(persona))
-//                .personaToPersonaOutputDto();
-//    }
+    @Override
+    public PersonaOutputDTO updatePersona(PersonaInputDTO personaInputDTO) {
+        Persona persona = personaRepository.findById(personaInputDTO.getId())
+                .orElseThrow();
+        persona.setNombre(personaInputDTO.getNombre());
+        persona.setEdad(personaInputDTO.getEdad());
+        persona.setPoblacion(personaInputDTO.getPoblacion());
+
+        return personaRepository.save(persona).personaToPersonaOutputDto();
+    }
 
     @Override
     public Iterable<PersonaOutputDTO> getPersonaByName(String nombre, int pageNumber, int pageSize) {

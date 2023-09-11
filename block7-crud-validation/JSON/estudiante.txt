@@ -3,7 +3,7 @@
     "num_hours_week": 20,
     "comments": "Comentarios del estudiante",
     "branch": "Backend",
-    "id_persona": 3
+    "id_persona": 1
 }
 
 {

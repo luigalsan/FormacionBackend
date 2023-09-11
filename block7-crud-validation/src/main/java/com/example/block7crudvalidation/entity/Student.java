@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -32,9 +34,8 @@ public class Student {
     @Column(nullable = false)
     private String branch;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_asignatura")
-    private Asignatura asignatura;
+    @OneToMany(mappedBy = "student")
+    Set<Asignatura> asignaturas;
 
     public Student(StudentOutputDtoSimple studentInputDTO){
 
