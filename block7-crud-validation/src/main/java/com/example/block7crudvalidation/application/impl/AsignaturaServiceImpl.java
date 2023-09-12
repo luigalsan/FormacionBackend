@@ -3,19 +3,27 @@ package com.example.block7crudvalidation.application.impl;
 import com.example.block7crudvalidation.application.AsignaturaService;
 import com.example.block7crudvalidation.controller.dto.Asignatura.AsignaturaInputDTO;
 import com.example.block7crudvalidation.controller.dto.Asignatura.AsignaturaOutputDTO;
+import com.example.block7crudvalidation.controller.dto.Student.StudentInputDto;
 import com.example.block7crudvalidation.entity.Asignatura;
+import com.example.block7crudvalidation.entity.Student;
 import com.example.block7crudvalidation.error.EntityNotFoundException;
 import com.example.block7crudvalidation.error.UnprocessableEntityException;
 import com.example.block7crudvalidation.repository.AsignaturaRepository;
+import com.example.block7crudvalidation.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AsignaturaServiceImpl implements AsignaturaService{
 
     @Autowired
     AsignaturaRepository asignaturaRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
 
     @Override
     public AsignaturaOutputDTO addAsignatura(AsignaturaInputDTO asignaturaInputDTO) {
@@ -49,6 +57,29 @@ public class AsignaturaServiceImpl implements AsignaturaService{
         return asignaturaRepository.findAll(pageRequest).getContent()
                 .stream().map(Asignatura::asignaturaToOutputDto).toList();
     }
+
+    @Override
+    public List<AsignaturaOutputDTO> getAsignaturaByStudent(Integer id) {
+        //Creo instancia de student que coincida por el id para luego mediante stream obtener todas las asignaturas
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el estudiante con id " + id));
+
+        return student.getAsignatura().stream().map(Asignatura::asignaturaToOutputDto).toList();
+    }
+
+    @Override
+    public AsignaturaOutputDTO updateAsignatura(AsignaturaInputDTO asignaturaInputDTO) {
+        Asignatura asignatura = asignaturaRepository.findById(asignaturaInputDTO.getId_asignatura())
+                .orElseThrow(() -> new EntityNotFoundException("La asignatura con id " + asignaturaInputDTO.getId_asignatura() + " no ha sido encontrada"));
+
+        asignatura.setAsignatura(asignaturaInputDTO.getAsignatura());
+        asignatura.setComments(asignatura.getComments());
+        asignatura.setInitial_date(asignatura.getInitial_date());
+        asignatura.setFinish_date(asignatura.getFinish_date());
+
+        return asignaturaRepository.save(asignatura).asignaturaToOutputDto();
+    }
+
 
     @Override
     public void deleteAsignaturaById(Integer id) {

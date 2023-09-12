@@ -1,12 +1,17 @@
 package com.example.block7crudvalidation.controller;
 
 import com.example.block7crudvalidation.application.impl.StudentServiceImpl;
+import com.example.block7crudvalidation.controller.dto.Asignatura.AsignaturaOutputDTO;
+import com.example.block7crudvalidation.controller.dto.Student.StudentInputDto;
 import com.example.block7crudvalidation.controller.dto.Student.StudentOutputDtoSimple;
+import com.example.block7crudvalidation.entity.Student;
 import com.example.block7crudvalidation.error.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
@@ -16,7 +21,7 @@ public class StudentController {
     StudentServiceImpl studentServiceImpl;
 
     @PostMapping
-    public ResponseEntity<?> addStudent(@RequestBody StudentOutputDtoSimple studentInputDTO){
+    public ResponseEntity<?> addStudent(@RequestBody StudentInputDto studentInputDTO){
         try{
             return ResponseEntity.ok().body(studentServiceImpl.addStudent(studentInputDTO));
         }catch(EntityNotFoundException e){
@@ -41,8 +46,14 @@ public class StudentController {
         }
     }
 
+    @GetMapping("/estudiante_asignatura/{id}")
+    public Iterable<AsignaturaOutputDTO> getAsignaturasByIdStudent(@PathVariable Integer id){
+            return studentServiceImpl.getAsignaturasByIdStudent(id);
+
+    }
+
     @PutMapping
-    public ResponseEntity<?> updatePersona(@RequestBody StudentOutputDtoSimple studentInputDTO) {
+    public ResponseEntity<?> updatePersona(@RequestBody StudentInputDto studentInputDTO) {
         try {
             studentServiceImpl.getStudentByIdSimple(studentInputDTO.getId_student()); //Obtengo el Id del objeto persona en POJO previamente serializado desde un JSON
             return ResponseEntity.ok().body(studentServiceImpl.updateStudent(studentInputDTO));
@@ -60,4 +71,6 @@ public class StudentController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
         }
     }
+
+
 }

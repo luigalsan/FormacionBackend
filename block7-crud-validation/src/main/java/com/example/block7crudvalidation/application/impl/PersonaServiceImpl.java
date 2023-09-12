@@ -117,6 +117,8 @@ public class PersonaServiceImpl implements PersonaService {
 
         persona.setName(personaInputDTO.getName());
         persona.setSurname(personaInputDTO.getSurname());
+        persona.setUsuario(personaInputDTO.getUsuario());
+        persona.setPassword(personaInputDTO.getPassword());
         persona.setCompany_email(personaInputDTO.getCompany_email());
         persona.setPersonal_email(personaInputDTO.getPersonal_email());
         persona.setCity(personaInputDTO.getCity());
@@ -132,7 +134,7 @@ public class PersonaServiceImpl implements PersonaService {
     public void deletePersonaById(Integer id) {
 
         int idUsuarioEliminado = personaRepository.findById(id).
-                orElseThrow(() -> new EntityNotFoundException("No se encontró el id: " + id + "para poder eliminar el elemento")).getId_persona();
+                orElseThrow(() -> new EntityNotFoundException("No se encontró el id: " + id + " para poder eliminar el elemento")).getId_persona();
         personaRepository.deleteById(idUsuarioEliminado);
     }
 

@@ -5,14 +5,13 @@ import com.example.block7crudvalidation.controller.dto.Persona.PersonaOutputDTO;
 import com.example.block7crudvalidation.controller.dto.Persona.PersonaProfesorOutputDto;
 import com.example.block7crudvalidation.controller.dto.Persona.PersonaStudentOutputDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "persona")

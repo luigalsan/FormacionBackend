@@ -69,7 +69,7 @@ public class ProfesorController {
         try {
             profesorService.addStudentToProfesor(id_student, id_profesor);
             return ResponseEntity.ok().body("El estudiante con id " + id_student +
-                    "se agregó al profesor satisfactoriamente con id" + id_profesor);
+                    "se agregó al profesor satisfactoriamente con id " + id_profesor);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ocurrió un fallo");
         }
