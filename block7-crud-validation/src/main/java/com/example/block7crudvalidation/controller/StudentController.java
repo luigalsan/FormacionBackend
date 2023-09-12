@@ -72,5 +72,27 @@ public class StudentController {
         }
     }
 
+    @PostMapping("/asignar_asignatura")
+    public ResponseEntity<String> asignarAsignaturaToStudent(@PathVariable Integer id_student, @RequestParam List<Integer> ids_asignaturas) {
+        try {
+
+            studentServiceImpl.asignarAsignaturasEstudiante(id_student, ids_asignaturas);
+            return ResponseEntity.ok().body("Se han agregado satisfactoriamente las asignaturas al estudiante con id: " + id_student);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Ocurrió un fallo");
+        }
+    }
+
+    @PostMapping("/asignar_asignatura/{id}")
+    public ResponseEntity<String> desasignarAsignaturaToStudent(@PathVariable Integer id_student, @RequestParam List<Integer> ids_asignaturas) {
+        try {
+
+            studentServiceImpl.desasignarAsignaturasEstudiante(id_student, ids_asignaturas);
+            return ResponseEntity.ok().body("El estudiante con id " + id_student +
+                    "se agregó satisfactoriamente a la asignatura con id" + ids_asignaturas);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Ocurrió un fallo");
+        }
+    }
 
 }
