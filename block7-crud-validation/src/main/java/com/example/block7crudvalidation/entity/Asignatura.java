@@ -27,7 +27,7 @@ public class Asignatura {
     @Column(name = "fecha_final")
     private Date finish_date;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "asignatura")
     Set<Student> student;
 
     public Asignatura(AsignaturaInputDTO asignaturaInputDTO){

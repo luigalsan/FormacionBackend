@@ -34,7 +34,10 @@ public class Student {
     @Column(nullable = false)
     private String branch;
 
-    @ManyToMany(mappedBy = "student")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "student_asignatura",
+            joinColumns = @JoinColumn(name = "id_student", referencedColumnName = "id_student"),
+            inverseJoinColumns = @JoinColumn(name = "id_asignatura", referencedColumnName = "id_asignatura"))
     Set<Asignatura> asignatura;
 
     public Student(StudentInputDto studentInputDTO){

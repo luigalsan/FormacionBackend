@@ -110,7 +110,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addAsignaturaToStudent(Integer id_asignatura, Integer id_student) {
+    public void addAsignaturaToStudent(Integer id_student, Integer id_asignatura) {
         Student student = studentRepository.findById(id_student).orElseThrow(
                 () -> new EntityNotFoundException("No se ha encontrado el alumno con el id " + id_student)
         );
@@ -119,11 +119,11 @@ public class StudentServiceImpl implements StudentService {
                 () -> new EntityNotFoundException("No se ha encontrado la asignatura con el id " + id_asignatura)
         );
 
-        asignatura.getStudent().add(student);
-        asignaturaRepository.save(asignatura);
-//
-//        student.getAsignatura().add(asignatura);
-//        studentRepository.save(student);
+//        asignatura.getStudent().add(student);
+//        asignaturaRepository.save(asignatura);
+
+        student.getAsignatura().add(asignatura);
+        studentRepository.save(student);
     }
 
     @Override

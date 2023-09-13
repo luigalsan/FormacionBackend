@@ -100,7 +100,7 @@ public class StudentController {
         try {
             studentServiceImpl.addAsignaturaToStudent(id_student, id_asignatura);
             return ResponseEntity.ok().body("El estudiante con id " + id_student +
-                    "se agregó satisfactoriamente a la asignatura con id " + id_asignatura);
+                    " se agregó satisfactoriamente a la asignatura con id " + id_asignatura);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ocurrió un fallo");
         }
