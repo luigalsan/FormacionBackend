@@ -1,11 +1,13 @@
 package com.example.block7crudvalidation.controller;
 
 
+import com.example.block7crudvalidation.Feign.MyFeign;
 import com.example.block7crudvalidation.application.impl.PersonaServiceImpl;
 import com.example.block7crudvalidation.controller.dto.Persona.PersonaInputDTO;
 import com.example.block7crudvalidation.controller.dto.Persona.PersonaOutputDTO;
 import com.example.block7crudvalidation.controller.dto.Persona.PersonaProfesorOutputDto;
 import com.example.block7crudvalidation.controller.dto.Persona.PersonaStudentOutputDto;
+import com.example.block7crudvalidation.controller.dto.Profesor.ProfesorOutputDTO;
 import com.example.block7crudvalidation.error.EntityNotFoundException;
 import com.example.block7crudvalidation.error.UnprocessableEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,25 @@ public class PersonaController {
 
     @Autowired
     PersonaServiceImpl personaServiceImpl;
+
+    @Autowired
+    MyFeign feignService;
+
+    @GetMapping("/profesor/{id}")
+    public ResponseEntity<ProfesorOutputDTO> getProfesorById(
+            @PathVariable Integer id){
+        try{
+            ProfesorOutputDTO profesorOutputDTO = feignService.getProfesorById(id);
+
+            if (profesorOutputDTO != null){
+                return ResponseEntity.ok().body(profesorOutputDTO);
+            }else {
+                throw new EntityNotFoundException("No se encuentra el profesor con la id: " + id);
+            }
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findPersonById(@PathVariable Integer id, @RequestParam(value = "outputType", defaultValue = "default") String outputType) {
