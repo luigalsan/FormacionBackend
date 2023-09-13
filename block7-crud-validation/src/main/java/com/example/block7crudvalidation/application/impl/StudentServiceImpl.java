@@ -131,11 +131,9 @@ public class StudentServiceImpl implements StudentService {
 
         List<Asignatura> asignaturas = asignaturaRepository.findAllById(asignaturasId);
 
-        for (Asignatura asignatura : asignaturas) {
-            asignatura.getStudent().add(student);
-        }
+        student.getAsignatura().addAll(asignaturas);
 
-        asignaturaRepository.saveAll(asignaturas);
+        studentRepository.save(student);
     }
 
     @Override
@@ -146,11 +144,9 @@ public class StudentServiceImpl implements StudentService {
 
         List<Asignatura> asignaturas = asignaturaRepository.findAllById(asignaturasId);
 
-        for (Asignatura asignatura : asignaturas) {
-            asignatura.getStudent().remove(student);
-        }
+        student.getAsignatura().removeAll(asignaturas);
 
-        asignaturaRepository.saveAll(asignaturas);
+        studentRepository.save(student);
     }
 
 }
