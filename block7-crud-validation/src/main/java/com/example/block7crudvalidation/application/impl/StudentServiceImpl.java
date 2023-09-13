@@ -119,9 +119,6 @@ public class StudentServiceImpl implements StudentService {
                 () -> new EntityNotFoundException("No se ha encontrado la asignatura con el id " + id_asignatura)
         );
 
-//        asignatura.getStudent().add(student);
-//        asignaturaRepository.save(asignatura);
-
         student.getAsignatura().add(asignatura);
         studentRepository.save(student);
     }
