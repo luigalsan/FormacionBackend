@@ -56,19 +56,7 @@ public class StudentServiceImpl implements StudentService {
             return studentRepository.save(student).toStudentOutputDtoFull();
         }
 
-    @Override
-    public void addAsignaturaToStudent(Integer id_asignatura, Integer id_student) {
-        Student student = studentRepository.findById(id_student).orElseThrow(
-                () -> new EntityNotFoundException("No se ha encontrado el alumno con el id " + id_student)
-        );
 
-        Asignatura asignatura = asignaturaRepository.findById(id_asignatura).orElseThrow(
-                () -> new EntityNotFoundException("No se ha encontrado la asignatura con el id " + id_asignatura)
-        );
-
-        student.getAsignatura().add(asignatura);
-        studentRepository.save(student);
-    }
 
     @Override
     public StudentOutputDtoSimple getStudentByIdSimple(Integer id) {
@@ -122,6 +110,23 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public void addAsignaturaToStudent(Integer id_asignatura, Integer id_student) {
+        Student student = studentRepository.findById(id_student).orElseThrow(
+                () -> new EntityNotFoundException("No se ha encontrado el alumno con el id " + id_student)
+        );
+
+        Asignatura asignatura = asignaturaRepository.findById(id_asignatura).orElseThrow(
+                () -> new EntityNotFoundException("No se ha encontrado la asignatura con el id " + id_asignatura)
+        );
+
+        asignatura.getStudent().add(student);
+        asignaturaRepository.save(asignatura);
+//
+//        student.getAsignatura().add(asignatura);
+//        studentRepository.save(student);
+    }
+
+    @Override
     public void asignarAsignaturasEstudiante(Integer id_student, List<Integer> asignaturasId){
 
         Student student = studentRepository.findById(id_student)
@@ -129,9 +134,11 @@ public class StudentServiceImpl implements StudentService {
 
         List<Asignatura> asignaturas = asignaturaRepository.findAllById(asignaturasId);
 
-        student.getAsignatura().addAll(asignaturas);
+        for (Asignatura asignatura : asignaturas) {
+            asignatura.getStudent().add(student);
+        }
 
-        studentRepository.save(student);
+        asignaturaRepository.saveAll(asignaturas);
     }
 
     @Override
@@ -142,9 +149,11 @@ public class StudentServiceImpl implements StudentService {
 
         List<Asignatura> asignaturas = asignaturaRepository.findAllById(asignaturasId);
 
-        student.getAsignatura().removeAll(asignaturas);
+        for (Asignatura asignatura : asignaturas) {
+            asignatura.getStudent().remove(student);
+        }
 
-        studentRepository.save(student);
+        asignaturaRepository.saveAll(asignaturas);
     }
 
 }
