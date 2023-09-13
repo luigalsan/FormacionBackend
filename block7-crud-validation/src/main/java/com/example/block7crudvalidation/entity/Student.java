@@ -1,16 +1,16 @@
 package com.example.block7crudvalidation.entity;
 
+import com.example.block7crudvalidation.controller.dto.Student.StudentInputDto;
 import com.example.block7crudvalidation.controller.dto.Student.StudentOutputDtoFull;
 import com.example.block7crudvalidation.controller.dto.Student.StudentOutputDtoSimple;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "student")
@@ -28,16 +28,19 @@ public class Student {
     private String comments;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_profesor", nullable = true, unique = true) //Une en relación 1:1 la columna. Si el campo que relaciona con la tabla referenciada tiene el mismo nombre, no haría falta poner el parámetro referencedColumnName
+    @JoinColumn(name = "id_profesor") //Une en relación 1:1 la columna. Si el campo que relaciona con la tabla referenciada tiene el mismo nombre, no haría falta poner el parámetro referencedColumnName
     private Profesor profesor;
 
     @Column(nullable = false)
     private String branch;
 
-    @OneToMany(mappedBy = "student")
-    Set<Asignatura> asignaturas;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "student_asignatura",
+            joinColumns = @JoinColumn(name = "id_student", referencedColumnName = "id_student"),
+            inverseJoinColumns = @JoinColumn(name = "id_asignatura", referencedColumnName = "id_asignatura"))
+    Set<Asignatura> asignatura;
 
-    public Student(StudentOutputDtoSimple studentInputDTO){
+    public Student(StudentInputDto studentInputDTO){
 
         this.id_student = studentInputDTO.getId_student();
         this.num_hours_week =studentInputDTO.getNum_hours_week();

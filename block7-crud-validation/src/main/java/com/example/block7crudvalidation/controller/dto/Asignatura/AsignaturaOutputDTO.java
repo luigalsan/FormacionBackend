@@ -14,7 +14,6 @@ import java.util.Date;
 public class AsignaturaOutputDTO {
 
     private Integer id_asignatura;
-    private Integer id_student;
     private String asignatura;
     private String comment;
     private Date initial_date;

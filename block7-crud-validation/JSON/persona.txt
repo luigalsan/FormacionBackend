@@ -31,7 +31,7 @@
 
 {
   "id_persona": 3,
-  "usuario": "Cristian Cala",
+  "usuario": "CristianC",
   "password": "1234",
   "name": "Cristian",
   "surname": "Cala", // Aquí debes usar "surname" en lugar de "apellido"

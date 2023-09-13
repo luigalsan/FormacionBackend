@@ -21,25 +21,32 @@ public class PersonaController {
     PersonaServiceImpl personaServiceImpl;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findPersonById(@PathVariable Integer id, @RequestParam(value = "outputType", defaultValue = "simple") String outputType) {
-        return ResponseEntity.ok().body(personaServiceImpl.getPersonaId(id,outputType));
-
+    public ResponseEntity<?> findPersonById(@PathVariable Integer id, @RequestParam(value = "outputType", defaultValue = "default") String outputType) {
+        try{
+            return ResponseEntity.ok().body(personaServiceImpl.getPersonaId(id,outputType));
+        }catch(EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
+        }
     }
 
     @GetMapping("/usuario/{usuario}")
-    public ResponseEntity<?> findPersonByUsuario(@PathVariable String usuario, @RequestParam(value = "outputType", defaultValue = "simple") String outputType) {
-        return ResponseEntity.ok().body(personaServiceImpl.getPersonaByUsuario(usuario,outputType));
+    public ResponseEntity<?> findPersonByUsuario(@PathVariable String usuario, @RequestParam(value = "outputType", defaultValue = "default") String outputType) {
+        try{
+            return ResponseEntity.ok().body(personaServiceImpl.getPersonaByUsuario(usuario,outputType));
+        }catch(EntityNotFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
+        }
     }
 
     @GetMapping
-    public Iterable<PersonaOutputDTO> getAllStudents(
+    public Iterable<PersonaOutputDTO> getAllPersonas(
             @RequestParam(defaultValue = "0", required = false) int pageNumber,
             @RequestParam(defaultValue = "4", required = false) int pageSize) {
 
         return personaServiceImpl.getAllPersonas(pageNumber, pageSize);
     }
 
-    @PostMapping()
+    @PostMapping
     ResponseEntity<?> addPersona(@RequestBody PersonaInputDTO persona){
         try {
             personaServiceImpl.addPersona(persona);
@@ -50,7 +57,6 @@ public class PersonaController {
     }
 
 
-    //CAMBIAR PORQUE NO USO EL UPDATE
     @PutMapping
     public ResponseEntity<?> updatePersona(@RequestBody PersonaInputDTO persona) {
         try {
@@ -65,7 +71,7 @@ public class PersonaController {
     public ResponseEntity<?> deletePersona(@PathVariable Integer id) {
         try {
             personaServiceImpl.deletePersonaById(id);
-            return ResponseEntity.ok().body("El usuario con id " + id + " ha sido eliminada correctamente");
+            return ResponseEntity.ok().body("El usuario con id: " + id + " ha sido eliminada correctamente");
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
         }

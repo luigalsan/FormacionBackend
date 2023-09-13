@@ -24,12 +24,11 @@ public class Asignatura {
     private String comments;
     @Column(name = "fecha_inicial", nullable = false)
     private Date initial_date;
-    @Column(name = "fecha final")
+    @Column(name = "fecha_final")
     private Date finish_date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_student", nullable = false, unique = true)
-    private Student student;
+    @ManyToMany(mappedBy = "asignatura")
+    Set<Student> student;
 
     public Asignatura(AsignaturaInputDTO asignaturaInputDTO){
         this.id_asignatura = asignaturaInputDTO.getId_asignatura();
@@ -42,7 +41,6 @@ public class Asignatura {
     public AsignaturaOutputDTO asignaturaToOutputDto(){
         return new AsignaturaOutputDTO(
                 this.id_asignatura,
-                this.student.getId_student(),
                 this.comments,
                 this.asignatura,
                 this.initial_date,

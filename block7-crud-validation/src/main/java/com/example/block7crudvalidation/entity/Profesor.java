@@ -9,8 +9,8 @@ import lombok.*;
 import java.util.Set;
 
 @Entity
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "profesor")
@@ -20,7 +20,8 @@ public class Profesor {
     private Integer id_profesor;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_persona", nullable = false, unique = true)
-    Persona persona;
+    private Persona persona;
+    @Column
     private String comments;
     private String branch;
     @OneToMany(mappedBy = "profesor")

@@ -3,6 +3,7 @@ package com.example.block7crudvalidation.application.impl;
 import com.example.block7crudvalidation.application.ProfesorService;
 import com.example.block7crudvalidation.controller.dto.Profesor.ProfesorInputDTO;
 import com.example.block7crudvalidation.controller.dto.Profesor.ProfesorOutputDTO;
+import com.example.block7crudvalidation.entity.Asignatura;
 import com.example.block7crudvalidation.entity.Persona;
 import com.example.block7crudvalidation.entity.Profesor;
 import com.example.block7crudvalidation.entity.Student;
@@ -54,6 +55,8 @@ public class ProfesorServiceImpl implements ProfesorService {
     }
 
 
+
+
     @Override
     public ProfesorOutputDTO getProfesorById(Integer id) {
        return profesorRepository.findById(id)
@@ -78,7 +81,7 @@ public class ProfesorServiceImpl implements ProfesorService {
     }
 
     @Override
-    public void addStudentToProfesor(Integer id_profesor, Integer id_student) {
+    public void addStudentToProfesor(Integer id_student, Integer id_profesor) {
         Student student = studentRepository.findById(id_student)
                 .orElseThrow(() -> new EntityNotFoundException("No se encuentra el estudiante con el id " + id_student));
         Profesor profesor = profesorRepository.findById(id_profesor)
@@ -86,6 +89,9 @@ public class ProfesorServiceImpl implements ProfesorService {
 
         student.setProfesor(profesor);
         profesor.getStudents().add(student);
+
+        studentRepository.save(student);
+        profesorRepository.save(profesor);
     }
 
     @Override

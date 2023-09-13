@@ -3,6 +3,7 @@ package com.example.block7crudvalidation.application.impl;
 import com.example.block7crudvalidation.application.StudentService;
 import com.example.block7crudvalidation.controller.dto.Asignatura.AsignaturaInputDTO;
 import com.example.block7crudvalidation.controller.dto.Asignatura.AsignaturaOutputDTO;
+import com.example.block7crudvalidation.controller.dto.Student.StudentInputDto;
 import com.example.block7crudvalidation.controller.dto.Student.StudentOutputDtoFull;
 import com.example.block7crudvalidation.controller.dto.Student.StudentOutputDtoSimple;
 import com.example.block7crudvalidation.entity.Asignatura;
@@ -10,6 +11,7 @@ import com.example.block7crudvalidation.entity.Persona;
 import com.example.block7crudvalidation.entity.Student;
 import com.example.block7crudvalidation.error.EntityNotFoundException;
 import com.example.block7crudvalidation.error.UnprocessableEntityException;
+import com.example.block7crudvalidation.repository.AsignaturaRepository;
 import com.example.block7crudvalidation.repository.PersonaRepository;
 import com.example.block7crudvalidation.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,11 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     StudentRepository studentRepository;
 
+    @Autowired
+    AsignaturaRepository asignaturaRepository;
+
     @Override
-    public StudentOutputDtoFull addStudent(StudentOutputDtoSimple studentInputDTO) {
+    public StudentOutputDtoFull addStudent(StudentInputDto studentInputDTO) {
 
 
         //Manejar excepciones en número de horas y branch
@@ -51,6 +56,8 @@ public class StudentServiceImpl implements StudentService {
             return studentRepository.save(student).toStudentOutputDtoFull();
         }
 
+
+
     @Override
     public StudentOutputDtoSimple getStudentByIdSimple(Integer id) {
         return studentRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("No se encontró el estudiante con el id: " + id)).toStudentOutputDtoSimple();
@@ -64,9 +71,9 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<AsignaturaOutputDTO> getAsignaturasByIdStudent(Integer id) {
         Student student = studentRepository.findById(id)
-                .orElseThrow( () -> new UnprocessableEntityException("No se ha encontrado el id del estudiante"));
+                .orElseThrow( () -> new EntityNotFoundException("No se ha encontrado el id del estudiante"));
 
-        return student.getAsignaturas().stream().map(Asignatura::asignaturaToOutputDto).toList();
+        return student.getAsignatura().stream().map(Asignatura::asignaturaToOutputDto).toList();
     }
 
     @Override
@@ -77,7 +84,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentOutputDtoSimple updateStudent(StudentOutputDtoSimple studentInputDTO) {
+    public StudentOutputDtoSimple updateStudent(StudentInputDto studentInputDTO) {
 
         //Creo objeto Student para cambiar los atributos mediante el parámetro studentInputDTO
         //Algunos atributos como id_persona, id_profesor no se alterarán.
@@ -89,7 +96,7 @@ public class StudentServiceImpl implements StudentService {
         student.setComments(studentInputDTO.getComments());
         student.setBranch(studentInputDTO.getBranch());
 
-        return student.toStudentOutputDtoSimple();
+        return studentRepository.save(student).toStudentOutputDtoSimple();
 
     }
 
@@ -102,25 +109,51 @@ public class StudentServiceImpl implements StudentService {
 
     }
 
+    @Override
+    public void addAsignaturaToStudent(Integer id_student, Integer id_asignatura) {
+        Student student = studentRepository.findById(id_student).orElseThrow(
+                () -> new EntityNotFoundException("No se ha encontrado el alumno con el id " + id_student)
+        );
+
+        Asignatura asignatura = asignaturaRepository.findById(id_asignatura).orElseThrow(
+                () -> new EntityNotFoundException("No se ha encontrado la asignatura con el id " + id_asignatura)
+        );
+
+//        asignatura.getStudent().add(student);
+//        asignaturaRepository.save(asignatura);
+
+        student.getAsignatura().add(asignatura);
+        studentRepository.save(student);
+    }
+
+    @Override
+    public void asignarAsignaturasEstudiante(Integer id_student, List<Integer> asignaturasId){
+
+        Student student = studentRepository.findById(id_student)
+                .orElseThrow(() -> new EntityNotFoundException("El estudiante con Id " + id_student + "no fue encontrado"));
+
+        List<Asignatura> asignaturas = asignaturaRepository.findAllById(asignaturasId);
+
+        for (Asignatura asignatura : asignaturas) {
+            asignatura.getStudent().add(student);
+        }
+
+        asignaturaRepository.saveAll(asignaturas);
+    }
+
+    @Override
+    public void desasignarAsignaturasEstudiante(Integer id_student, List<Integer> asignaturasId){
+
+        Student student = studentRepository.findById(id_student)
+                .orElseThrow(() -> new EntityNotFoundException("El estudiante con Id " + id_student + "no fue encontrado"));
+
+        List<Asignatura> asignaturas = asignaturaRepository.findAllById(asignaturasId);
+
+        for (Asignatura asignatura : asignaturas) {
+            asignatura.getStudent().remove(student);
+        }
+
+        asignaturaRepository.saveAll(asignaturas);
+    }
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
