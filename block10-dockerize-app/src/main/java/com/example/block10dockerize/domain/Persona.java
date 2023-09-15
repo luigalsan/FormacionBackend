@@ -1,4 +1,4 @@
-package com.example.demoPostgre.domain;
+package com.example.block10dockerize.domain;
 
 import jakarta.persistence.*;
 

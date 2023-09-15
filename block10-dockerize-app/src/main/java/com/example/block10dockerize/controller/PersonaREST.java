@@ -1,11 +1,11 @@
-package com.example.demoPostgre.controller;
+package com.example.block10dockerize.controller;
 
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.demoPostgre.domain.Persona;
-import com.example.demoPostgre.service.PersonaService;
+import com.example.block10dockerize.domain.Persona;
+import com.example.block10dockerize.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

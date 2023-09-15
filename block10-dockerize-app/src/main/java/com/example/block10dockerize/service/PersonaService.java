@@ -1,10 +1,10 @@
-package com.example.demoPostgre.service;
+package com.example.block10dockerize.service;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.example.demoPostgre.domain.Persona;
-import com.example.demoPostgre.repository.PersonaRepository;
+import com.example.block10dockerize.domain.Persona;
+import com.example.block10dockerize.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
