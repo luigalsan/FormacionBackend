@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
@@ -17,10 +18,12 @@
         <option value="$PROJECT_DIR$/block6-path-variable-headers/pom.xml" />
         <option value="$PROJECT_DIR$/block7-crud/pom.xml" />
         <option value="$PROJECT_DIR$/block7-crud-validation/pom.xml" />
+        <option value="$PROJECT_DIR$/block10-dockerize-app/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/block10-dockerize-app/pom.xml" />
         <option value="$PROJECT_DIR$/block5-command-line-runner/untitled/pom.xml" />
         <option value="$PROJECT_DIR$/cargapropiedades/pom.xml" />
       </set>
