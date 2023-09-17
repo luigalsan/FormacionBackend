@@ -23,7 +23,6 @@
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/block10-dockerize-app/pom.xml" />
         <option value="$PROJECT_DIR$/block5-command-line-runner/untitled/pom.xml" />
         <option value="$PROJECT_DIR$/cargapropiedades/pom.xml" />
       </set>
