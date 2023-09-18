@@ -19,6 +19,7 @@
         <option value="$PROJECT_DIR$/block7-crud/pom.xml" />
         <option value="$PROJECT_DIR$/block7-crud-validation/pom.xml" />
         <option value="$PROJECT_DIR$/block10-dockerize-app/pom.xml" />
+        <option value="$PROJECT_DIR$/../S/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -26,6 +27,7 @@
         <option value="$PROJECT_DIR$/block10-dockerize-app/pom.xml" />
         <option value="$PROJECT_DIR$/block5-command-line-runner/untitled/pom.xml" />
         <option value="$PROJECT_DIR$/cargapropiedades/pom.xml" />
+        <option value="$PROJECT_DIR$/../S/pom.xml" />
       </set>
     </option>
   </component>
