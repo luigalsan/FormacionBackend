@@ -13,6 +13,7 @@
         <module>block3-maven-package</module>
         <module>block3-create-repo-git</module>
         <module>block5-logging</module>
+        <module>block11-CORS</module>
 
     </modules>
 

@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Block7CrudValidationApplication" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="com.example.block7crudvalidation.Block7CrudValidationApplication" />
+    <option name="MAIN_CLASS_NAME" value="com.example.block11cors.Block7CrudValidationApplication" />
     <module name="demo" />
     <option name="VM_PARAMETERS" value="-Dserver.port=8080" />
     <extension name="coverage">
       <pattern>
-        <option name="PATTERN" value="com.example.block7crudvalidation.*" />
+        <option name="PATTERN" value="com.example.block11cors.*" />
         <option name="ENABLED" value="true" />
       </pattern>
     </extension>
