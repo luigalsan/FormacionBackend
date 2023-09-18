@@ -11,6 +11,8 @@ import java.util.Date;
 public class PersonaOutputDTO {
 
     private Integer id_persona;
+    private String usuario;
+    private String password;
     private String name;
     private String surname;
     private String company_email;
