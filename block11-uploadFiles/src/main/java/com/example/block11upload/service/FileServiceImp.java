@@ -5,9 +5,13 @@ import com.example.block11upload.repository.FileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,16 +21,13 @@ import java.util.Date;
 
 @Slf4j
 @Service
-public class FileServiceImp {
+public class FileServiceImp implements FileService {
 
     @Autowired
     private FileRepository fileRepository;
 
     @Value(("${cod.file.storage.location}")) //Esta línea apunta al properties donde tengo definida la localizacion del fichero
-    private String fileUploadLocation;
-
-    @Value("${download.location}")
-    private String fileDownloadLocation;
+    private String fileLocation;
 
 public String uploadFile(MultipartFile file, String categoria, String tipo){
     String messageResponse = null;
@@ -50,10 +51,8 @@ public String uploadFile(MultipartFile file, String categoria, String tipo){
     try {
         //Obtener el file y guardarlo en algún lugar
         byte[] bytes = file.getBytes();
-        Path path = Paths.get(fileUploadLocation + originalFilename);
+        Path path = Paths.get(fileLocation + originalFilename);
         Files.write(path, bytes);
-
-        messageResponse = "You successfully uploaded " + originalFilename + "";
 
         FileEntity fichero = new FileEntity();
         fichero.setName(originalFilename);
@@ -70,10 +69,26 @@ public String uploadFile(MultipartFile file, String categoria, String tipo){
 }
 
 public void setFileUploadLocation(String fileUploadLocation){
-    this.fileUploadLocation = fileUploadLocation;
+    this.fileLocation = fileUploadLocation;
 }
 
+public InputStreamResource downloadFile(String fileName){
+
+    log.info("Downloading file {}", fileName);
+    InputStreamResource resource = null;
+    try {
+        File file = new File(fileLocation + fileName);
+        resource = new InputStreamResource(new FileInputStream(file));
+    }catch (FileNotFoundException e){
+        e.printStackTrace();
+    }
+
+        return resource;
+    }
+
 }
+
+
 
 
 
