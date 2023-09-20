@@ -34,8 +34,6 @@ public String uploadFile(MultipartFile file, String categoria, String tipo){
     String originalFilename = file.getOriginalFilename();
     // Extraer la extensión del nombre del archivo
     String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
-    log.info("La extensión del archivo es: " + fileExtension
-    + "/El tipo del archivo es: " + tipo);
 
     if(!fileExtension.equals(tipo)){
         messageResponse = "El archivo a subir no coincide con el tipo";
@@ -69,6 +67,10 @@ public String uploadFile(MultipartFile file, String categoria, String tipo){
     }
 
     return messageResponse;
+}
+
+public void setFileUploadLocation(String fileUploadLocation){
+    this.fileUploadLocation = fileUploadLocation;
 }
 
 }

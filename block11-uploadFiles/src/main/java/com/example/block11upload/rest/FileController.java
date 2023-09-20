@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -29,4 +26,14 @@ public class FileController {
         log.info("Upload File {} ", file.getOriginalFilename());
         return fileServiceImp.uploadFile(file, categoria, tipo);
     }
+
+    @GetMapping("/setpath")
+    public String setPath(
+            @RequestParam("path") String path){
+        log.info("Setting a new path {} ", path);
+        fileServiceImp.setFileUploadLocation(path);
+        return "Se ha cambiado la ruta del directorio de archivos a " + path;
+
+    }
+
 }
