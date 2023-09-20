@@ -24,9 +24,9 @@ public class FileController {
     @PostMapping("/upload/{tipo}")
     public String uploadFile(
             @RequestParam("file") MultipartFile file,
-            @PathVariable String tipo,
-            @RequestParam("categoria") String categoria){
+            @RequestParam("categoria") String categoria,
+            @PathVariable String tipo){
         log.info("Upload File {} ", file.getOriginalFilename());
-        return fileServiceImp.uploadFile(file, tipo, categoria);
+        return fileServiceImp.uploadFile(file, categoria, tipo);
     }
 }

@@ -2,9 +2,6 @@ package com.example.block11upload.service;
 
 import com.example.block11upload.entity.FileEntity;
 import com.example.block11upload.repository.FileRepository;
-import com.example.block11upload.rest.dto.FileInputDto;
-import com.example.block11upload.rest.dto.FileOutputDto;
-import com.example.block11upload.storage.StorageProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +12,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -38,6 +34,9 @@ public String uploadFile(MultipartFile file, String categoria, String tipo){
     String originalFilename = file.getOriginalFilename();
     // Extraer la extensión del nombre del archivo
     String fileExtension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+    log.info("La extensión del archivo es: " + fileExtension
+    + "/El tipo del archivo es: " + tipo);
+
     if(!fileExtension.equals(tipo)){
         messageResponse = "El archivo a subir no coincide con el tipo";
         return messageResponse;
@@ -47,6 +46,7 @@ public String uploadFile(MultipartFile file, String categoria, String tipo){
         messageResponse = "Por favor, selecciona un tipo valido a subir";
         return messageResponse;
     }
+
     log.info("Upload File {} ", file.getOriginalFilename());
 
     try {
