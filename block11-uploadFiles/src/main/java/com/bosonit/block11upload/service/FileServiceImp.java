@@ -86,6 +86,22 @@ public InputStreamResource downloadFile(String fileName){
         return resource;
     }
 
+public InputStreamResource findById(Integer id){
+    String name = fileRepository.findById(id).get().getName(); //Busco en el repositorio la
+
+    return downloadFile(name);
+
+}
+
+public InputStreamResource findByName(String name){
+    FileEntity entidad = fileRepository.findAll().stream()
+            .filter(persona -> persona.getName()
+                    .equals(name)).findFirst().get();
+
+    return downloadFile(entidad.getName());
+}
+
+
 }
 
 

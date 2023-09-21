@@ -17,9 +17,6 @@ public class FileController {
     @Autowired
     FileServiceImp fileServiceImp;
 
-    @Autowired
-    FileRepository fileRepository;
-
     @PostMapping("/upload/{tipo}")
     public ResponseEntity<String> uploadFile(
             @RequestParam("file") MultipartFile file,
@@ -39,9 +36,7 @@ public class FileController {
 
     @GetMapping("/download/fileId")
     public ResponseEntity<String> findById(@RequestParam("id") Integer id){
-        String name = fileRepository.findById(id).get().getName(); //Busco en el repositorio la
-        fileServiceImp.downloadFile(name);
-
+        fileServiceImp.findById(id);
         return ResponseEntity.ok().body("El archivo con el ID: " + id + " se ha descargado satisfactoriamente");
 
     }
@@ -49,14 +44,8 @@ public class FileController {
     @GetMapping("/download/fileName")
     public ResponseEntity<String> findByName(@RequestParam("name") String nombre) {
 
-        FileEntity entidad = fileRepository.findAll().stream()
-                .filter(persona -> persona.getName()
-                        .equals(nombre)).findFirst().get();
-        String name = entidad.getName();
-
-        fileServiceImp.downloadFile(name);
-
-        return ResponseEntity.ok().body("El archivo con nombre " + name + " se ha descargado satisfactoriamente");
+        fileServiceImp.downloadFile(nombre);
+        return ResponseEntity.ok().body("El archivo con nombre " + nombre + " se ha descargado satisfactoriamente");
 
     }
 
