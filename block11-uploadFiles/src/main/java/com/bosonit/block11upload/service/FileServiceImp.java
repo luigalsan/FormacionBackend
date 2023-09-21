@@ -1,7 +1,7 @@
-package com.example.block11upload.service;
+package com.bosonit.block11upload.service;
 
-import com.example.block11upload.entity.FileEntity;
-import com.example.block11upload.repository.FileRepository;
+import com.bosonit.block11upload.entity.FileEntity;
+import com.bosonit.block11upload.repository.FileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package com.example.block11upload.storage;
+package com.bosonit.block11upload.storage;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

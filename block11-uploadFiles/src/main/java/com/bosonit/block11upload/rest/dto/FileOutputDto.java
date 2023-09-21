@@ -1,4 +1,4 @@
-package com.example.block11upload.rest.dto;
+package com.bosonit.block11upload.rest.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,14 +1,13 @@
-package com.example.block11upload.entity;
+package com.bosonit.block11upload.entity;
 
-import com.example.block11upload.rest.dto.FileInputDto;
-import com.example.block11upload.rest.dto.FileOutputDto;
+import com.bosonit.block11upload.rest.dto.FileInputDto;
+import com.bosonit.block11upload.rest.dto.FileOutputDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity

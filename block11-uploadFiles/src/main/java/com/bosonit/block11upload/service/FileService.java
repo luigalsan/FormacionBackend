@@ -1,4 +1,4 @@
-package com.example.block11upload.service;
+package com.bosonit.block11upload.service;
 
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.web.multipart.MultipartFile;

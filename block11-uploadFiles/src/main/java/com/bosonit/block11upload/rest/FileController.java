@@ -1,9 +1,8 @@
-package com.example.block11upload.rest;
+package com.bosonit.block11upload.rest;
 
-import com.example.block11upload.entity.FileEntity;
-import com.example.block11upload.repository.FileRepository;
-import com.example.block11upload.rest.dto.FileOutputDto;
-import com.example.block11upload.service.FileServiceImp;
+import com.bosonit.block11upload.entity.FileEntity;
+import com.bosonit.block11upload.repository.FileRepository;
+import com.bosonit.block11upload.service.FileServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 @Slf4j
 @RestController
 public class FileController {
