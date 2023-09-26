@@ -12,6 +12,7 @@ import com.bosonit.block7crudvalidation.repository.PersonaRepository;
 import com.bosonit.block7crudvalidation.repository.ProfesorRepository;
 import com.bosonit.block7crudvalidation.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -99,4 +100,8 @@ public class ProfesorServiceImpl implements ProfesorService {
                 .orElseThrow(() -> new EntityNotFoundException("No se encuentra el profesor con el id " + id));
         profesorRepository.deleteById(id);
     }
+
+
+
+
 }

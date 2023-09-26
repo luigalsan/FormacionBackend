@@ -3,6 +3,7 @@ package com.bosonit.block7crudvalidation.controller;
 import com.bosonit.block7crudvalidation.application.impl.AsignaturaServiceImpl;
 import com.bosonit.block7crudvalidation.controller.dto.Asignatura.AsignaturaInputDTO;
 import com.bosonit.block7crudvalidation.controller.dto.Asignatura.AsignaturaOutputDTO;
+import com.bosonit.block7crudvalidation.controller.dto.Persona.PersonaOutputDTO;
 import com.bosonit.block7crudvalidation.error.EntityNotFoundException;
 import com.bosonit.block7crudvalidation.error.UnprocessableEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,8 @@ public class AsignaturaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
         }
     }
+
+
 }
 
 

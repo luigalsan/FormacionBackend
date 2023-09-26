@@ -9,6 +9,7 @@ import com.bosonit.block7crudvalidation.controller.dto.Profesor.ProfesorOutputDT
 import com.bosonit.block7crudvalidation.error.EntityNotFoundException;
 import com.bosonit.block7crudvalidation.error.UnprocessableEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +24,6 @@ public class PersonaController {
 
     @Autowired
     PersonaServiceImpl personaServiceImpl;
-
-    @Autowired
-    PersonaServiceImpl personaService;
 
     @Autowired
     MyFeign feignService;
@@ -113,8 +111,17 @@ public class PersonaController {
             @RequestParam(required = false) String orderBy
     ) {
 
-        List<PersonaOutputDTO> personas = personaService.filterPersonas(usuario, name, surname, createDateSuperior, createDateInferior, orderBy);
+        List<PersonaOutputDTO> personas = personaServiceImpl.filterPersonas(usuario, name, surname, createDateSuperior, createDateInferior, orderBy);
         return new ResponseEntity<>(personas, HttpStatus.OK);
+    }
+
+    @GetMapping("/pagination")
+    public ResponseEntity<Page<PersonaOutputDTO>> obtenerPersonasPaginadas(
+            @RequestParam(required = true) int page,
+            @RequestParam(required = false, defaultValue = "10") int size) {
+
+        Page<PersonaOutputDTO> personasPage = personaServiceImpl.buscarPersonas(page, size);
+        return new ResponseEntity<>(personasPage, HttpStatus.OK);
     }
 }
 

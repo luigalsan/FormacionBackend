@@ -14,7 +14,10 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -193,6 +196,13 @@ public class PersonaServiceImpl implements PersonaService {
                 .toList();
 
         }
+
+    public Page<PersonaOutputDTO> buscarPersonas(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+        Page<Persona> page = personaRepository.findAll(pageable);
+
+        return page.map(Persona::personaToPersonaOutputDto);
+    }
 }
 
 
