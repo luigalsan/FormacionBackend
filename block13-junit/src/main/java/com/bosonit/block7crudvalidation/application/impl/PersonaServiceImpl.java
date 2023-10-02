@@ -26,28 +26,6 @@ public class PersonaServiceImpl implements PersonaService {
         else if(persona.getUsuario().length() > 10 || persona.getUsuario().length() < 6)
             throw new UnprocessableEntityException("El usuario debe tener entre 10 y 6 caracteres");
 
-        else if(persona.getName() == null || persona.getName().isEmpty())
-            throw new UnprocessableEntityException("Inserte nombre, por favor");
-
-        else if(persona.getPassword() == null || persona.getPassword().isEmpty())
-            throw new UnprocessableEntityException("Inserte contraseña, por favor");
-
-        else if(persona.getCompany_email() == null || persona.getCompany_email().isEmpty())
-            throw new UnprocessableEntityException("Inserte email de su compañía, por favor");
-
-        else if(persona.getPersonal_email() == null || persona.getPersonal_email().isEmpty())
-            throw new UnprocessableEntityException("Inserte email personal");
-
-        else if(persona.getCity() == null || persona.getCity().isEmpty())
-            throw new UnprocessableEntityException("Inserte ciudad, por favor");
-
-        else if(persona.getCreated_date() == null){ //Al ser un objeto de tipo Date no puede hacer uso del método isEmpty()
-            throw new UnprocessableEntityException("Inserte fecha, por favor");
-        }
-
-        //Comprobar si existe el usuario en la base de datos o no
-
-        //Esto podría ahorrarmelo porque ya existe un método que lo comprueba
        boolean existe = personaRepository.findAll().stream().anyMatch(p -> p.getUsuario().equals(persona.getUsuario()));
        if(!existe){
            return personaRepository.save(new Persona(persona)).personaToPersonaOutputDto();

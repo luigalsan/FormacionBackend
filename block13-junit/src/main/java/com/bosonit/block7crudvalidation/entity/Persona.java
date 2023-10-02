@@ -70,6 +70,7 @@ public class Persona {
 
         return new PersonaOutputDTO(
             this.id_persona,
+            this.usuario,
             this.name,
             this.surname,
             this.company_email,

@@ -1,6 +1,5 @@
 package com.bosonit.block7crudvalidation.controller.dto.Persona;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -10,13 +9,12 @@ import java.util.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class PersonaInputDTO {
+@NoArgsConstructor
+public class PersonaOutputDTO {
 
     private Integer id_persona;
     private String usuario;
-    private String password;
     private String name;
     private String surname;
     private String company_email;
@@ -28,5 +26,3 @@ public class PersonaInputDTO {
     private Date termination_date;
 
 }
-
-
