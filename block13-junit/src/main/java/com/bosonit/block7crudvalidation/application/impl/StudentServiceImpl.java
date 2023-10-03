@@ -26,6 +26,7 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     StudentRepository studentRepository;
 
+
     @Autowired
     AsignaturaRepository asignaturaRepository;
 
@@ -95,7 +96,6 @@ public class StudentServiceImpl implements StudentService {
         student.setBranch(studentInputDTO.getBranch());
 
         return studentRepository.save(student).toStudentOutputDtoSimple();
-
     }
 
     @Override

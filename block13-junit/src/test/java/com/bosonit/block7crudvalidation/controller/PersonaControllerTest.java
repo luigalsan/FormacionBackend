@@ -34,7 +34,7 @@ public class PersonaControllerTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     /**************************************** TESTEANDO getPersonById **************************************************/

@@ -18,13 +18,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,7 +53,7 @@ public class PersonaServiceTest {
 // Ejecuta el método que deseas probar
         PersonaOutputDTO outputDto = personaService.addPersona(inputDto);
 
-// Verifica que los valores coincidan con lo esperado
+    // Verifica que los valores coincidan con lo esperado
 
         assertEquals("luis1991", outputDto.getUsuario()); // Verificar el nombre
 
@@ -67,9 +63,9 @@ public class PersonaServiceTest {
     @Test
     public void testGetPersonaById() {
         Integer idPersona = 1; // El ID que deseamos buscar
-        Persona personaMock = new Persona();
-        personaMock.setId_persona(idPersona);
-        when(personaRepository.findById(idPersona)).thenReturn(Optional.of(personaMock));
+        Persona persona = new Persona();
+        persona.setId_persona(idPersona);
+        when(personaRepository.findById(idPersona)).thenReturn(Optional.of(persona));
 
         // Ejecutar el método que deseas probar
         Object result = personaService.getPersonaId(idPersona, "default");
@@ -77,10 +73,8 @@ public class PersonaServiceTest {
         assertNotNull(result);
         assertTrue(result instanceof PersonaOutputDTO);
 
-        // Puedes realizar más aserciones según lo que esperes en el resultado
         PersonaOutputDTO outputDto = (PersonaOutputDTO) result;
         assertEquals(idPersona, outputDto.getId_persona()); // Verificar el ID
-        // Verificar otros atributos si es necesario
 
     }
 
@@ -226,7 +220,6 @@ public class PersonaServiceTest {
         // Verificar que no se llamó al método save en el repositorio simulado
         verify(personaRepository, never()).save(any());
 
-        // No es necesario verificar el resultado en este caso ya que se espera una excepción
     }
 
     /**************************************TESTEANDO deletePersonaById*************************************************/
