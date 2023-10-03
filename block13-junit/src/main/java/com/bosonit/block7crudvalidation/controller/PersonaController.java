@@ -95,4 +95,5 @@ public class PersonaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
         }
     }
+
 }
