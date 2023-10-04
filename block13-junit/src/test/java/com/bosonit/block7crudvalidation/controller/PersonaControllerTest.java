@@ -116,7 +116,7 @@ public class PersonaControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
     }
 
-    /**************************************** TESTEANDO getPersonByUsuario **************************************************/
+    /**************************************** TESTEANDO getAllPersonas **************************************************/
 
     @Test
     public void testGetAllPersonas() {
@@ -140,8 +140,8 @@ public class PersonaControllerTest {
         // Crea una lista de personas ficticia para simular la respuesta del servicio
         // Puedes personalizar esta lista según tus necesidades de prueba
         List<PersonaOutputDTO> personasOutputDto = new ArrayList<>();
-        personasOutputDto.add(new PersonaOutputDTO(/* datos de la primera persona */));
-        personasOutputDto.add(new PersonaOutputDTO(/* datos de la segunda persona */));
+        personasOutputDto.add(new PersonaOutputDTO());
+        personasOutputDto.add(new PersonaOutputDTO());
         // Agrega más personas si es necesario
         return personasOutputDto;
     }

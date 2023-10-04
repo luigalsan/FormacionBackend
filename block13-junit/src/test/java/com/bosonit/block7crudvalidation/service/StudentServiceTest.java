@@ -43,7 +43,7 @@ public class StudentServiceTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
-    /*************************************** TESTEANDO addPersona *****************************************************/
+    /*************************************** TESTEANDO addStudent *****************************************************/
 
     @Test
     public void testAddStudent(){
@@ -191,13 +191,13 @@ public class StudentServiceTest {
     @Test
     public void testUpdateStudentNotFound() {
         // Configurar el comportamiento esperado del repositorio simulado
-        Integer idPersona = 1; // El ID que deseamos actualizar
+        Integer idStudent = 1; // El ID que deseamos actualizar
         StudentInputDto inputDTO = new StudentInputDto();
-        inputDTO.setId_student(idPersona);
+        inputDTO.setId_student(idStudent);
         inputDTO.setBranch("Matemáticas"); // Nuevo valor para el usuario
 
         // Simular que no se encuentra ninguna persona con el ID proporcionado
-        when(studentRepository.findById(idPersona)).thenReturn(Optional.empty());
+        when(studentRepository.findById(idStudent)).thenReturn(Optional.empty());
 
         // Ejecutar el método que deseas probar y esperar que lance EntityNotFoundException
         assertThrows(EntityNotFoundException.class, () -> {
@@ -205,7 +205,7 @@ public class StudentServiceTest {
         });
 
         // Verificar que se llamó al método findById con el ID deseado
-        verify(studentRepository).findById(idPersona);
+        verify(studentRepository).findById(idStudent);
 
         // Verificar que no se llamó al método save en el repositorio simulado
         verify(studentRepository, never()).save(any());
@@ -214,7 +214,7 @@ public class StudentServiceTest {
     /*************************************** TESTEANDO deleteStudentById *************************************************/
 
     @Test
-    public void testDeletePersonaById() {
+    public void testDeleteStudentById() {
         // Configurar el comportamiento esperado del repositorio simulado
         Integer idStudent = 1; // El ID que deseamos eliminar
 
@@ -234,7 +234,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void testDeletePersonaByIdNotFound(){
+    public void testDeleteStudentByIdNotFound(){
 
         //Configurar el comportamiento esperado del repositorio simulado
         Integer studentId = 1;
@@ -263,8 +263,6 @@ public class StudentServiceTest {
 
         Asignatura asignatura = new Asignatura();
         asignatura.setId_asignatura(id_asignatura);
-
-
 
         // Configurar comportamiento simulado para findById en el repositorio de estudiantes y asignaturas
         when(studentRepository.findById(id_student)).thenReturn(Optional.of(student));

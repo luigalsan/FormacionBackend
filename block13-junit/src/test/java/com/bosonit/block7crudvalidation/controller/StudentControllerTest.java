@@ -40,7 +40,7 @@ public class StudentControllerTest {
     /**************************************** TESTEANDO addStudent **************************************************/
 
     @Test
-    public void testAddStudent_Success() {
+    public void testAddStudent() {
 
         StudentOutputDtoFull studentOutputDtoFull = new StudentOutputDtoFull();
         StudentInputDto studentInputDto = new StudentInputDto();
@@ -56,7 +56,7 @@ public class StudentControllerTest {
     public void testAddStudentError() {
         doThrow(EntityNotFoundException.class).when(studentService).addStudent(any());
 
-        StudentInputDto inputDTO = new StudentInputDto(/* Proporciona los datos de entrada necesarios */);
+        StudentInputDto inputDTO = new StudentInputDto();
         ResponseEntity<?> response = studentController.addStudent(inputDTO);
 
         verify(studentService, times(1)).addStudent(inputDTO);
@@ -136,7 +136,7 @@ public class StudentControllerTest {
     /**************************************** TESTEANDO updatePersona **************************************************/
 
     @Test
-    public void testUpdatePersona() {
+    public void testUpdateStudent() {
         StudentOutputDtoSimple studentOutputDtoSimple = new StudentOutputDtoSimple();
         StudentInputDto validInput = new StudentInputDto();
         validInput.setId_student(1);
@@ -168,7 +168,7 @@ public class StudentControllerTest {
     }
 
 
-    /**************************************** TESTEANDO deletePersona **************************************************/
+    /**************************************** TESTEANDO deleteStudentById **************************************************/
 
     @Test
     public void testDeleteStudentById() {
@@ -183,8 +183,6 @@ public class StudentControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
     }
-
-    /**************************************** TESTEANDO deleteStudentById **************************************************/
 
     @Test
     public void testDeleteStudentByIdError() {
@@ -269,7 +267,7 @@ public class StudentControllerTest {
     /**************************************** TESTEANDO addAsignaturaToStudent **************************************************/
 
     @Test
-    public void testAddAsignaturatoStudent() {
+    public void testAddAsignaturaToStudent() {
         Integer studentId = 1;
         Integer asignaturaId = 2;
 
@@ -284,7 +282,7 @@ public class StudentControllerTest {
     }
 
     @Test
-    public void testAddAsignaturatoStudentError() {
+    public void testAddAsignaturaToStudentError() {
         Integer studentId = 1;
         Integer asignaturaId = 2;
 
