@@ -23,10 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class StudentServiceTest {
 
@@ -256,15 +253,101 @@ public class StudentServiceTest {
 
     @Test
     public void testAddAsignaturaToStudent() {
+        Integer id_student = 1;
+        Integer id_asignatura = 2;
+
+        // Crear un objeto Student simulado y un objeto Asignatura simulado
         Student student = new Student();
+        student.setId_student(id_student);
+        student.setAsignatura(new HashSet<>());
 
-        when(studentRepository.findById(1)).thenReturn(java.util.Optional.of(student));
-        when(asignaturaRepository.findById(2)).thenReturn(java.util.Optional.of(new Asignatura()));
+        Asignatura asignatura = new Asignatura();
+        asignatura.setId_asignatura(id_asignatura);
 
-        studentService.addAsignaturaToStudent(1, 2);
 
-        verify(asignaturaRepository, times(1)).save(any());
+
+        // Configurar comportamiento simulado para findById en el repositorio de estudiantes y asignaturas
+        when(studentRepository.findById(id_student)).thenReturn(Optional.of(student));
+        when(asignaturaRepository.findById(id_asignatura)).thenReturn(Optional.of(asignatura));
+
+        // Llamar al método que deseas probar
+        studentService.addAsignaturaToStudent(id_student, id_asignatura);
+
+        // Verificar que findById se llamó una vez para ambos repositorios
+        verify(studentRepository, times(1)).findById(id_student);
+        verify(asignaturaRepository, times(1)).findById(id_asignatura);
+
+        // Verificar que el método save se llamó una vez para el repositorio de estudiantes
+        verify(studentRepository, times(1)).save(student);
+
+        // Verificar que la asignatura se ha agregado al estudiante
+        assertTrue(student.getAsignatura().contains(asignatura));
     }
 
+    /*************************************** TESTEANDO asignarAsignaturasEstudiante *************************************************/
 
+    @Test
+    public void testAsignarAsignaturasEstudiante() {
+        // Datos de ejemplo
+        Integer idStudent = 1;
+        List<Integer> asignaturasIds = Arrays.asList(101, 102, 103);
+        Student student = new Student();
+        student.setId_student(idStudent);
+        student.setAsignatura(new HashSet<>());
+        List<Asignatura> asignaturas = Arrays.asList(
+                new Asignatura(),
+                new Asignatura(),
+                new Asignatura()
+        );
+
+        // Configuración de comportamiento de los repositorios
+        when(studentRepository.findById(idStudent)).thenReturn(Optional.of(student));
+        when(asignaturaRepository.findAllById(asignaturasIds)).thenReturn(asignaturas);
+
+        // Llamada al método que se está probando
+        studentService.asignarAsignaturasEstudiante(idStudent, asignaturasIds);
+
+        // Verificaciones
+        assertTrue(student.getAsignatura().containsAll(asignaturas));
+        verify(studentRepository, times(1)).findById(idStudent);
+        verify(asignaturaRepository, times(1)).findAllById(asignaturasIds);
+        verify(studentRepository, times(1)).save(student);
+    }
+
+    /*************************************** TESTEANDO desasignarAsignaturasEstudiante *************************************************/
+
+    @Test
+    public void testDesasignarAsignaturasEstudiante() {
+        // Datos de prueba
+        Integer idEstudiante = 1;
+        List<Integer> idsAsignaturas = Arrays.asList(101, 102);
+
+        // Crear un objeto Student simulado
+        Student student = new Student();
+        student.setId_student(idEstudiante);
+        student.setAsignatura(new HashSet<>());
+
+        // Crear asignaturas simuladas
+        Asignatura asignatura1 = new Asignatura();
+        asignatura1.setId_asignatura(101);
+        Asignatura asignatura2 = new Asignatura();
+        asignatura2.setId_asignatura(102);
+
+        // Configurar el comportamiento del repositorio de estudiantes simulado
+        when(studentRepository.findById(idEstudiante)).thenReturn(Optional.of(student));
+
+        // Configurar el comportamiento del repositorio de asignaturas simulado
+        when(asignaturaRepository.findAllById(idsAsignaturas)).thenReturn(Arrays.asList(asignatura1, asignatura2));
+
+        // Llamar al método que se va a probar
+        studentService.desasignarAsignaturasEstudiante(idEstudiante, idsAsignaturas);
+
+        // Verificar que el método save del repositorio de estudiantes se llamó una vez
+        verify(studentRepository, times(1)).save(student);
+
+        // Verificar que las asignaturas se eliminaron del estudiante
+        assertFalse(student.getAsignatura().contains(asignatura1));
+        assertFalse(student.getAsignatura().contains(asignatura2));
+
+    }
 }

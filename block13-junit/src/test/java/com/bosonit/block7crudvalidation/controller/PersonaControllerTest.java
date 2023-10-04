@@ -3,7 +3,6 @@ package com.bosonit.block7crudvalidation.controller;
 import com.bosonit.block7crudvalidation.application.impl.PersonaServiceImpl;
 import com.bosonit.block7crudvalidation.controller.dto.Persona.PersonaInputDTO;
 import com.bosonit.block7crudvalidation.controller.dto.Persona.PersonaOutputDTO;
-import com.bosonit.block7crudvalidation.entity.Persona;
 import com.bosonit.block7crudvalidation.error.CustomError;
 import com.bosonit.block7crudvalidation.error.EntityNotFoundException;
 import com.bosonit.block7crudvalidation.error.UnprocessableEntityException;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -148,7 +146,7 @@ public class PersonaControllerTest {
         return personasOutputDto;
     }
 
-    /**************************************** TESTEANDO getPersonByUsuario **************************************************/
+    /**************************************** TESTEANDO addPerson **************************************************/
 
     @Test
     public void testAddPersonaSuccess() {
