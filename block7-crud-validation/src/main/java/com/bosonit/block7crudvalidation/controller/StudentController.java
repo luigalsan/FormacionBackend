@@ -51,9 +51,9 @@ public class StudentController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updatePersona(@RequestBody StudentInputDto studentInputDTO) {
+    public ResponseEntity<?> updateStudent(@RequestBody StudentInputDto studentInputDTO) {
         try {
-            studentServiceImpl.getStudentByIdSimple(studentInputDTO.getId_student()); //Obtengo el Id del objeto persona en POJO previamente serializado desde un JSON
+            studentServiceImpl.getStudentByIdSimple(studentInputDTO.getId_student()); //Obtengo el Id del objeto student en POJO previamente serializado desde un JSON
             return ResponseEntity.ok().body(studentServiceImpl.updateStudent(studentInputDTO));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());

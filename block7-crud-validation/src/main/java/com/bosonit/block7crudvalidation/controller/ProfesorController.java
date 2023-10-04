@@ -18,9 +18,6 @@ public class ProfesorController {
     @Autowired
     ProfesorServiceImpl profesorService;
 
-    @Autowired
-    StudentServiceImpl studentService;
-
     //
     @PostMapping
     public ResponseEntity<?> addProfesor(@RequestBody ProfesorInputDTO profesorInputDTO){
