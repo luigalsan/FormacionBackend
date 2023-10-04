@@ -51,7 +51,7 @@ public class StudentController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updatePersona(@RequestBody StudentInputDto studentInputDTO) {
+    public ResponseEntity<?> updateStudent(@RequestBody StudentInputDto studentInputDTO) {
         try {
             studentServiceImpl.getStudentByIdSimple(studentInputDTO.getId_student()); //Obtengo el Id del objeto persona en POJO previamente serializado desde un JSON
             return ResponseEntity.ok().body(studentServiceImpl.updateStudent(studentInputDTO));
