@@ -31,19 +31,16 @@ public class AsignaturaServiceImpl implements AsignaturaService{
             throw new UnprocessableEntityException("Inserte la asignatura, por favor");
         else if(asignaturaInputDTO.getComment() == null)
             throw new UnprocessableEntityException("Inserte comentario, por favor");
-        else if(asignaturaInputDTO.getInitial_date() == null)
-            throw new UnprocessableEntityException("Inserte fecha inicial, por favor");
-        else if(asignaturaInputDTO.getFinish_date() == null)
-            throw new UnprocessableEntityException("Inserte fecha final, por favor");
 
         boolean existe = asignaturaRepository.findById(asignaturaInputDTO.getId_asignatura()).isPresent();
 
         if(existe){
             throw new UnprocessableEntityException("La asignatura ya existe");
         }else{
-           return  asignaturaRepository.save(new Asignatura(asignaturaInputDTO)).asignaturaToOutputDto();
+            return  asignaturaRepository.save(new Asignatura(asignaturaInputDTO)).asignaturaToOutputDto();
         }
     }
+
     @Override
     public AsignaturaOutputDTO getAsignaturaById(Integer id) {
         return asignaturaRepository.findById(id).

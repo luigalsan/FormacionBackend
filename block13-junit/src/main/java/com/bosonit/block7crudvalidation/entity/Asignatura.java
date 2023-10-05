@@ -40,8 +40,8 @@ public class Asignatura {
     public AsignaturaOutputDTO asignaturaToOutputDto(){
         return new AsignaturaOutputDTO(
                 this.id_asignatura,
-                this.comments,
                 this.asignatura,
+                this.comments,
                 this.initial_date,
                 this.finish_date
 

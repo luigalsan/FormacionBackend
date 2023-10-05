@@ -47,7 +47,7 @@ public class AsignaturaController {
     public ResponseEntity<?> deleteAsignaturaById(@PathVariable Integer id){
         try{
             asignaturaService.deleteAsignaturaById(id);
-            return ResponseEntity.ok().body("El estudiante con id " + id + "ha sido eliminado");
+            return ResponseEntity.ok().body("La asignatura con id " + id + "ha sido eliminado");
 
         }catch(EntityNotFoundException e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
