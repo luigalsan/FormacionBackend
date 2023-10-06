@@ -1,0 +1,87 @@
+package com.bosonit.blockcrudvalidation.application.impl;
+
+import com.bosonit.blockcrudvalidation.controller.dto.Asignatura.AsignaturaInputDTO;
+import com.bosonit.blockcrudvalidation.controller.dto.Asignatura.AsignaturaOutputDTO;
+import com.bosonit.blockcrudvalidation.entity.Asignatura;
+import com.bosonit.blockcrudvalidation.error.EntityNotFoundException;
+import com.bosonit.blockcrudvalidation.error.UnprocessableEntityException;
+import com.bosonit.blockcrudvalidation.application.AsignaturaService;
+import com.bosonit.blockcrudvalidation.entity.Student;
+import com.bosonit.blockcrudvalidation.repository.AsignaturaRepository;
+import com.bosonit.blockcrudvalidation.repository.StudentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class AsignaturaServiceImpl implements AsignaturaService{
+
+    @Autowired
+    AsignaturaRepository asignaturaRepository;
+
+    @Autowired
+    StudentRepository studentRepository;
+
+    @Override
+    public AsignaturaOutputDTO addAsignatura(AsignaturaInputDTO asignaturaInputDTO) {
+
+        if(asignaturaInputDTO.getAsignatura() == null)
+            throw new UnprocessableEntityException("Inserte la asignatura, por favor");
+        else if(asignaturaInputDTO.getComment() == null)
+            throw new UnprocessableEntityException("Inserte comentario, por favor");
+
+        boolean existe = asignaturaRepository.findById(asignaturaInputDTO.getIdAsignatura()).isPresent();
+
+        if(existe){
+            throw new UnprocessableEntityException("La asignatura ya existe");
+        }else{
+            return  asignaturaRepository.save(new Asignatura(asignaturaInputDTO)).asignaturaToOutputDto();
+        }
+    }
+
+    @Override
+    public AsignaturaOutputDTO getAsignaturaById(Integer id) {
+        return asignaturaRepository.findById(id).
+                orElseThrow(() -> new EntityNotFoundException("No se encuentra el Id de la asignatura")).asignaturaToOutputDto();
+    }
+
+    @Override
+    public Iterable<AsignaturaOutputDTO> getAllAsignaturas(Integer pageNumber, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNumber, pageSize);
+        return asignaturaRepository.findAll(pageRequest).getContent()
+                .stream().map(Asignatura::asignaturaToOutputDto).toList();
+    }
+
+    @Override
+    public List<AsignaturaOutputDTO> getAsignaturaByStudent(Integer id) {
+        //Creo instancia de student que coincida por el id para luego mediante stream obtener todas las asignaturas
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el estudiante con id " + id));
+
+        return student.getAsignatura().stream().map(Asignatura::asignaturaToOutputDto).toList();
+    }
+
+    @Override
+    public AsignaturaOutputDTO updateAsignatura(AsignaturaInputDTO asignaturaInputDTO) {
+        Asignatura asignatura = asignaturaRepository.findById(asignaturaInputDTO.getIdAsignatura())
+                .orElseThrow(() -> new EntityNotFoundException("La asignatura con id " + asignaturaInputDTO.getAsignatura() + " no ha sido encontrada"));
+
+        asignatura.setAsignatura(asignaturaInputDTO.getAsignatura());
+        asignatura.setComments(asignatura.getComments());
+        asignatura.setInitialDate(asignatura.getInitialDate());
+        asignatura.setFinishDate(asignatura.getFinishDate());
+
+        return asignaturaRepository.save(asignatura).asignaturaToOutputDto();
+    }
+
+
+    @Override
+    public void deleteAsignaturaById(Integer id) {
+        asignaturaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encuentra la asignatura con el id " + id));
+        asignaturaRepository.deleteById(id);
+    }
+
+}
