@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/asignatura")
@@ -18,22 +19,25 @@ public class AsignaturaController {
     AsignaturaServiceImpl asignaturaService;
 
     @PostMapping
-    public ResponseEntity<?> addAsignatura(@RequestBody AsignaturaInputDTO asignaturaInputDTO){
-        try{
-            asignaturaService.addAsignatura(asignaturaInputDTO);
-            return ResponseEntity.ok().body(asignaturaInputDTO);
-        }catch(UnprocessableEntityException u){
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(u.getCustomError());
+    @ResponseStatus
+    public ResponseEntity<AsignaturaOutputDTO> addAsignatura(@RequestBody AsignaturaInputDTO asignaturaInputDTO) {
+        try {
+            return ResponseEntity.ok().body(asignaturaService.addAsignatura(asignaturaInputDTO));
+
+        } catch (UnprocessableEntityException u) {
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, u.getMessage());
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getAsignaturaById(@PathVariable Integer id){
+    @ResponseStatus
+    public ResponseEntity<AsignaturaOutputDTO> getAsignaturaById(@PathVariable Integer id){
         try{
             return ResponseEntity.ok().body(asignaturaService.getAsignaturaById(id));
+
+
         }catch(EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
-        }
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());        }
     }
     @GetMapping
     public Iterable<AsignaturaOutputDTO> getAllAsignaturas(
@@ -44,7 +48,7 @@ public class AsignaturaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAsignaturaById(@PathVariable Integer id){
+    public ResponseEntity<Object> deleteAsignaturaById(@PathVariable Integer id){
         try{
             asignaturaService.deleteAsignaturaById(id);
             return ResponseEntity.ok().body("La asignatura con id " + id + "ha sido eliminado");
@@ -55,12 +59,12 @@ public class AsignaturaController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updateAsignatura(@RequestBody AsignaturaInputDTO asignaturaInputDTO){
+    public ResponseEntity<AsignaturaOutputDTO> updateAsignatura(@RequestBody AsignaturaInputDTO asignaturaInputDTO){
         try{
             return ResponseEntity.ok().body(asignaturaService.updateAsignatura(asignaturaInputDTO));
 
         }catch (EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 }

@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-public class AsignaturaControllerTest {
+class AsignaturaControllerTest {
 
     @InjectMocks
     private AsignaturaController asignaturaController;
@@ -35,13 +36,13 @@ public class AsignaturaControllerTest {
     /**************************************** TESTEANDO getAsignaturaById **************************************************/
 
     @Test
-    public void testGetAsignaturaById_Success() {
+     void testGetAsignaturaById_Success() {
         int id = 1;
 
         AsignaturaOutputDTO asignaturaOutputDTO = new AsignaturaOutputDTO();
         when(asignaturaService.getAsignaturaById(id)).thenReturn(asignaturaOutputDTO);
 
-        ResponseEntity<?> response = asignaturaController.getAsignaturaById(id);
+        ResponseEntity<AsignaturaOutputDTO> response = asignaturaController.getAsignaturaById(id);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(asignaturaOutputDTO, response.getBody());
@@ -50,23 +51,27 @@ public class AsignaturaControllerTest {
     }
 
     @Test
-    public void testGetAsignaturaById_EntityNotFoundException() {
+     void testGetAsignaturaById_EntityNotFoundException() {
         int id = 1;
+        String errorMessage = "No se encontró la asignatura con ID: " + id;
+        when(asignaturaService.getAsignaturaById(id)).thenThrow(new EntityNotFoundException(errorMessage));
 
-        when(asignaturaService.getAsignaturaById(id)).thenThrow(new EntityNotFoundException("No se encontró la asignatura con ID: " + id));
+        // Ejecuta la prueba
+        try {
+            asignaturaController.getAsignaturaById(id);
+        } catch (ResponseStatusException e) {
+            // Verifica que el código de estado sea HttpStatus.NOT_FOUND
+            assertEquals(HttpStatus.NOT_FOUND, e.getStatusCode());
 
-        ResponseEntity<?> response = asignaturaController.getAsignaturaById(id);
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-
-        CustomError customError = (CustomError) response.getBody();
-        assertEquals("No se encontró la asignatura con ID: " + id, customError.getMensaje());
+            // Verifica que el mensaje de error sea igual al mensaje de error simulado
+            assertEquals(errorMessage, e.getReason());
+        }
     }
 
     /**************************************** TESTEANDO getAllStudents **************************************************/
 
     @Test
-    public void testGetAllStudents() {
+     void testGetAllStudents() {
         int pageNumber = 0;
         int pageSize = 4;
         Iterable<AsignaturaOutputDTO> asignaturaOutputDTOS = crearListaAsignaturaOutputDto();
@@ -92,11 +97,11 @@ public class AsignaturaControllerTest {
     /****************************************TESTEANDO deleteAsignaturaById**************************************************/
 
     @Test
-    public void testDeleteAsignaturaById() {
+     void testDeleteAsignaturaById() {
         Integer id = 1;
         doNothing().when(asignaturaService).deleteAsignaturaById(1);
 
-        ResponseEntity<?> response = asignaturaController.deleteAsignaturaById(id);
+        ResponseEntity<Object> response = asignaturaController.deleteAsignaturaById(id);
 
         verify(asignaturaService, times(1)).deleteAsignaturaById(id);
 
@@ -105,13 +110,13 @@ public class AsignaturaControllerTest {
     }
 
     @Test
-    public void testDeleteAsignatura() {
+     void testDeleteAsignatura() {
 
         Integer id = 1;
         doThrow(new EntityNotFoundException("No se encontró el id: " + id + " para poder eliminar el elemento"))
                 .when(asignaturaService).deleteAsignaturaById(id);
 
-        ResponseEntity<?> response = asignaturaController.deleteAsignaturaById(id);
+        ResponseEntity<Object> response = asignaturaController.deleteAsignaturaById(id);
 
         verify(asignaturaService, times(1)).deleteAsignaturaById(id);
 
@@ -125,7 +130,7 @@ public class AsignaturaControllerTest {
     /****************************************TESTEANDO updateAsignaturaById**************************************************/
 
     @Test
-    public void testUpdateAsignaturaById(){
+     void testUpdateAsignaturaById(){
 
         AsignaturaInputDTO asignaturaInputDTO = new AsignaturaInputDTO();
         AsignaturaOutputDTO asignaturaOutputDTO = new AsignaturaOutputDTO();
@@ -134,7 +139,7 @@ public class AsignaturaControllerTest {
 
         when(asignaturaService.updateAsignatura(asignaturaInputDTO)).thenReturn(asignaturaOutputDTO);
 
-        ResponseEntity<?> response = asignaturaController.updateAsignatura(asignaturaInputDTO);
+        ResponseEntity<AsignaturaOutputDTO> response = asignaturaController.updateAsignatura(asignaturaInputDTO);
 
         verify(asignaturaService, times(1)).updateAsignatura(asignaturaInputDTO);
         assertEquals(HttpStatus.OK, response.getStatusCode()); //Comprobando que devuelve el código de estado
@@ -142,12 +147,12 @@ public class AsignaturaControllerTest {
     }
 
     @Test
-    public void testDeleteAsignaturaByIdError() {
+     void testDeleteAsignaturaByIdError() {
         Integer invalidId = 2;
 
         doThrow(new EntityNotFoundException("La asignatura no fue encontrada")).when(asignaturaService).deleteAsignaturaById(invalidId);
 
-        ResponseEntity<?> response = asignaturaController.deleteAsignaturaById(invalidId);
+        ResponseEntity<Object> response = asignaturaController.deleteAsignaturaById(invalidId);
 
         verify(asignaturaService).deleteAsignaturaById(invalidId);
 

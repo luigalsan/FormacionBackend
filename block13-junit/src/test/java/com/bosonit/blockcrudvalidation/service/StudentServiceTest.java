@@ -25,7 +25,7 @@ import org.springframework.data.domain.PageRequest;
 
 import java.util.*;
 
-public class StudentServiceTest {
+class StudentServiceTest {
 
     @InjectMocks
     private StudentServiceImpl studentService;
@@ -46,7 +46,7 @@ public class StudentServiceTest {
     /*************************************** TESTEANDO addStudent *****************************************************/
 
     @Test
-    public void testAddStudent(){
+     void testAddStudent(){
         StudentInputDto studentInputDto = new StudentInputDto();
         studentInputDto.setIdPersona(1);
         studentInputDto.setNumHoursWeek(100);
@@ -71,7 +71,7 @@ public class StudentServiceTest {
     /*************************************** TESTEANDO getStudentById *************************************************/
 
     @Test
-    public void testGetStudentById(){
+     void testGetStudentById(){
 
         Integer student_id = 1;
         Student student = new Student();
@@ -90,7 +90,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void testGetStudentById_NotFound(){
+     void testGetStudentById_NotFound(){
         Integer studentIdNotFound = 1;
         when(studentRepository.findById(studentIdNotFound)).thenReturn(Optional.empty());
 
@@ -107,7 +107,7 @@ public class StudentServiceTest {
 
 
     @Test
-    public void testGetAllStudents() {
+     void testGetAllStudents() {
         // Configurar el comportamiento esperado del repositorio simulado
         int pageNumber = 0;
         int pageSize = 10;
@@ -148,7 +148,7 @@ public class StudentServiceTest {
     /*************************************** TESTEANDO updateStudent *************************************************/
 
     @Test
-    public void testUpdateStudent() {
+     void testUpdateStudent() {
         // Configurar el comportamiento esperado del repositorio simulado
         Integer idStudent = 1; // El ID que deseamos actualizar
         StudentInputDto inputDTO = new StudentInputDto();
@@ -189,7 +189,7 @@ public class StudentServiceTest {
 
 
     @Test
-    public void testUpdateStudentNotFound() {
+     void testUpdateStudentNotFound() {
         // Configurar el comportamiento esperado del repositorio simulado
         Integer idStudent = 1; // El ID que deseamos actualizar
         StudentInputDto inputDTO = new StudentInputDto();
@@ -214,7 +214,7 @@ public class StudentServiceTest {
     /*************************************** TESTEANDO deleteStudentById *************************************************/
 
     @Test
-    public void testDeleteStudentById() {
+     void testDeleteStudentById() {
         // Configurar el comportamiento esperado del repositorio simulado
         Integer idStudent = 1; // El ID que deseamos eliminar
 
@@ -234,7 +234,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void testDeleteStudentByIdNotFound(){
+     void testDeleteStudentByIdNotFound(){
 
         //Configurar el comportamiento esperado del repositorio simulado
         Integer studentId = 1;
@@ -252,7 +252,7 @@ public class StudentServiceTest {
     /*************************************** TESTEANDO addAsignaturaToStudent *************************************************/
 
     @Test
-    public void testAddAsignaturaToStudent() {
+     void testAddAsignaturaToStudent() {
         Integer id_student = 1;
         Integer id_asignatura = 2;
 
@@ -285,7 +285,7 @@ public class StudentServiceTest {
     /*************************************** TESTEANDO asignarAsignaturasEstudiante *************************************************/
 
     @Test
-    public void testAsignarAsignaturasEstudiante() {
+     void testAsignarAsignaturasEstudiante() {
         // Datos de ejemplo
         Integer idStudent = 1;
         List<Integer> asignaturasIds = Arrays.asList(101, 102, 103);
@@ -315,7 +315,7 @@ public class StudentServiceTest {
     /*************************************** TESTEANDO desasignarAsignaturasEstudiante *************************************************/
 
     @Test
-    public void testDesasignarAsignaturasEstudiante() {
+     void testDesasignarAsignaturasEstudiante() {
         // Datos de prueba
         Integer idEstudiante = 1;
         List<Integer> idsAsignaturas = Arrays.asList(101, 102);

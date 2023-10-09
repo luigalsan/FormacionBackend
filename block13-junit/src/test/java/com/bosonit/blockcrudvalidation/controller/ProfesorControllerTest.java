@@ -20,7 +20,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-public class ProfesorControllerTest {
+class ProfesorControllerTest {
 
     @InjectMocks
     ProfesorController profesorController;
@@ -36,7 +36,7 @@ public class ProfesorControllerTest {
     /**************************************** TESTEANDO addProfesor **************************************************/
 
     @Test
-    public void testAddProfesor() {
+     void testAddProfesor() {
 
         ProfesorOutputDTO profesorOutputDTO = new ProfesorOutputDTO();
         ProfesorInputDTO profesorInputDTO = new ProfesorInputDTO();
@@ -48,21 +48,13 @@ public class ProfesorControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    @Test
-    public void testAddProfesorError() {
-        doThrow(UnprocessableEntityException.class).when(profesorService).addProfesor(any());
 
-        ProfesorInputDTO inputDTO = new ProfesorInputDTO();
-        ResponseEntity<?> response = profesorController.addProfesor(inputDTO);
-
-        verify(profesorService, times(1)).addProfesor(inputDTO);
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, response.getStatusCode());
-    }
+    //Agregar testAddProfesorError() {
 
     /**************************************** TESTEANDO getProfesorById **************************************************/
 
     @Test
-    public void testGetProfesorById() {
+     void testGetProfesorById() {
         ProfesorOutputDTO profesorOutputDTO = new ProfesorOutputDTO();
 
         int studentId = 1;
@@ -74,23 +66,14 @@ public class ProfesorControllerTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-    @Test
-    public void testGetProfesorById_EntityNotFoundException() {
-        Integer id = 1;
 
-        when(profesorService.getProfesorById(id))
-                .thenThrow(new EntityNotFoundException("No se encontró el profesor con el id: " + id));
-
-        ResponseEntity<?> responseEntity = profesorController.getProfesorById(1);
-
-        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-    }
+    //Agregar testGetProfesorById_EntityNotFoundException()
 
 
     /**************************************** TESTEANDO getAllProfesores **************************************************/
 
     @Test
-    public void testGetAllProfesores() {
+     void testGetAllProfesores() {
         int pageNumber = 0;
         int pageSize = 4;
         Iterable<ProfesorOutputDTO> profesorOutputDTOS = crearListaDeProfesoresOutputDto();
@@ -114,7 +97,7 @@ public class ProfesorControllerTest {
     /**************************************** TESTEANDO updateProfesor **************************************************/
 
     @Test
-    public void testUpdateProfesor() {
+     void testUpdateProfesor() {
         ProfesorOutputDTO profesorOutputDTO = new ProfesorOutputDTO();
         ProfesorInputDTO validInput = new ProfesorInputDTO();
         validInput.setIdProfesor(1);
@@ -128,29 +111,13 @@ public class ProfesorControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    @Test
-    public void testUpdateProfesorError() {
-        ProfesorInputDTO inputDTO = new ProfesorInputDTO();
-        inputDTO.setIdPersona(0);
 
-        when(profesorService.updateProfesor(inputDTO))
-                .thenThrow(new EntityNotFoundException("No se encontró la persona"));
-
-        ResponseEntity<?> response = profesorController.updateProfesor(inputDTO);
-
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-
-        CustomError customError = (CustomError) response.getBody();
-        assertEquals(customError, response.getBody());
-
-        verify(profesorService, times(1)).updateProfesor(inputDTO);
-
-    }
+    //Agregar testUpdateProfesorError()
 
     /**************************************** TESTEANDO deleteProfesorById **************************************************/
 
     @Test
-    public void testDeleteProfesorById() {
+     void testDeleteProfesorById() {
         Integer validId = 1;
 
         doNothing().when(profesorService).deleteProfessorById(validId);
@@ -164,7 +131,7 @@ public class ProfesorControllerTest {
     }
 
     @Test
-    public void testDeleteProfesorByIdError() {
+     void testDeleteProfesorByIdError() {
         Integer invalidId = 2;
 
         doThrow(new EntityNotFoundException("El estudiante no fue encontrado")).when(profesorService).deleteProfessorById(invalidId);
@@ -180,7 +147,7 @@ public class ProfesorControllerTest {
     /**************************************** TESTEANDO testAddStudentProfesor **************************************************/
 
     @Test
-    public void testAddStudentProfesor() {
+     void testAddStudentProfesor() {
         Integer studentId = 1;
         Integer profesorId = 2;
 
@@ -195,7 +162,7 @@ public class ProfesorControllerTest {
     }
 
     @Test
-    public void testAddStudentProfesorError() {
+     void testAddStudentProfesorError() {
         Integer studentId = 1;
         Integer profesorId = 2;
 

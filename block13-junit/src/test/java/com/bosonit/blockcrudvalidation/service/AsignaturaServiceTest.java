@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class AsignaturaServiceTest {
+class AsignaturaServiceTest {
 
     @InjectMocks
     private AsignaturaServiceImpl asignaturaService;
@@ -40,7 +40,7 @@ public class AsignaturaServiceTest {
     /**************************************** TESTEANDO addAsignatura ******************************************************/
 
     @Test
-    public void testAddAsignatura() {
+     void testAddAsignatura() {
 
         AsignaturaInputDTO inputDto = new AsignaturaInputDTO();
         inputDto.setAsignatura("Informática");
@@ -60,7 +60,7 @@ public class AsignaturaServiceTest {
 
     /****************************************TESTEANDO getAsignaturaById**************************************************/
     @Test
-    public void testGetAsignaturaById() {
+     void testGetAsignaturaById() {
         Integer idAsignatura = 1;
         Asignatura asignatura = new Asignatura();
         asignatura.setIdAsignatura(idAsignatura);
@@ -77,7 +77,7 @@ public class AsignaturaServiceTest {
     }
 
     @Test
-    public void testGetAsignaturaByIdNotFound() {
+     void testGetAsignaturaByIdNotFound() {
         Integer idAsignatura = 1;
         when(asignaturaRepository.findById(idAsignatura)).thenReturn(Optional.empty());
 
@@ -92,7 +92,7 @@ public class AsignaturaServiceTest {
     /**************************************** TESTEANDO getAllAsignaturas ************************************************/
 
     @Test
-    public void testGetAllAsignaturas() {
+     void testGetAllAsignaturas() {
         int pageNumber = 0;
         int pageSize = 10;
 
@@ -120,7 +120,7 @@ public class AsignaturaServiceTest {
     /**************************************** TESTEANDO updateAsignatura ************************************************/
 
     @Test
-    public void testUpdateAsignatura() {
+     void testUpdateAsignatura() {
         Integer idAsignatura = 1;
         AsignaturaInputDTO inputDTO = new AsignaturaInputDTO();
         inputDTO.setIdAsignatura(idAsignatura);
@@ -148,7 +148,7 @@ public class AsignaturaServiceTest {
 
 
     @Test
-    public void testUpdateAsignaturaNotFound() {
+     void testUpdateAsignaturaNotFound() {
         Integer idAsignatura = 1;
         AsignaturaInputDTO inputDTO = new AsignaturaInputDTO();
         inputDTO.setIdAsignatura(idAsignatura);
@@ -171,7 +171,7 @@ public class AsignaturaServiceTest {
     /**************************************TESTEANDO deleteAsignaturaById*************************************************/
 
     @Test
-    public void testDeleteAsignaturaById() {
+     void testDeleteAsignaturaById() {
 
         Integer idAsignatura = 1;
 
@@ -186,7 +186,7 @@ public class AsignaturaServiceTest {
     }
 
     @Test
-    public void testDeleteAsignaturaByIdNotFound(){
+     void testDeleteAsignaturaByIdNotFound(){
 
         Integer idAsignatura = 1;
         AsignaturaInputDTO inputDTO = new AsignaturaInputDTO();

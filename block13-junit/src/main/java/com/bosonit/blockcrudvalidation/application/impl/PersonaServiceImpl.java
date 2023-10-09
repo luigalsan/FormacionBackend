@@ -1,5 +1,6 @@
 package com.bosonit.blockcrudvalidation.application.impl;
 
+import com.bosonit.blockcrudvalidation.controller.dto.Asignatura.AsignaturaOutputDTO;
 import com.bosonit.blockcrudvalidation.controller.dto.Persona.PersonaInputDTO;
 import com.bosonit.blockcrudvalidation.controller.dto.Persona.PersonaOutputDTO;
 import com.bosonit.blockcrudvalidation.error.EntityNotFoundException;
@@ -15,6 +16,8 @@ import java.util.List;
 @Service
 public class PersonaServiceImpl implements PersonaService {
 
+    private static final String ERROR_ADD_PERSONA = "No se ha encontrado la persona con el id";
+    private static final String ERROR_GET_PERSONA = "No se encontró el usuario:";
     @Autowired
     PersonaRepository personaRepository;
     @Override
@@ -40,13 +43,13 @@ public class PersonaServiceImpl implements PersonaService {
         switch(param){
             case "alumno":
                 return personaRepository.findById(id)
-                        .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado la persona con el id " + id)).personaToPersonaStudentDto();
+                        .orElseThrow(() -> new EntityNotFoundException(ERROR_ADD_PERSONA + " " + id)).personaToPersonaStudentDto();
             case "profesor":
                 return personaRepository.findById(id)
-                        .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado la persona con el id " + id)).personaToPersonaProfesorDto();
+                        .orElseThrow(() -> new EntityNotFoundException(ERROR_ADD_PERSONA + " " + id)).personaToPersonaProfesorDto();
             default:
                 return personaRepository.findById(id)
-                        .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado la persona con el id "+ id)).personaToPersonaOutputDto();
+                        .orElseThrow(() -> new EntityNotFoundException(ERROR_ADD_PERSONA + " " + id)).personaToPersonaOutputDto();
         }
     }
 
@@ -58,19 +61,19 @@ public class PersonaServiceImpl implements PersonaService {
                 return personaRepository.findAll().stream()
                         .filter(persona -> persona.getUsuario()
                                 .equals(usuario)).findFirst()
-                        .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario: " + usuario))
+                        .orElseThrow(() -> new EntityNotFoundException(ERROR_GET_PERSONA + " " + usuario))
                         .personaToPersonaStudentDto();
             case "profesor":
                 return personaRepository.findAll().stream()
                         .filter(persona -> persona.getUsuario()
                                 .equals(usuario)).findFirst()
-                        .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario: " + usuario))
+                        .orElseThrow(() -> new EntityNotFoundException(ERROR_GET_PERSONA + " " + usuario))
                         .personaToPersonaProfesorDto();
             default:
                 return personaRepository.findAll().stream()
                         .filter(persona -> persona.getUsuario()
                                 .equals(usuario)).findFirst()
-                        .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario: " + usuario))
+                        .orElseThrow(() -> new EntityNotFoundException(ERROR_GET_PERSONA + " " + usuario))
                         .personaToPersonaOutputDto();
         }
     }

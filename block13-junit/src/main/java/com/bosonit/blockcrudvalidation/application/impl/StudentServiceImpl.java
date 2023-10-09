@@ -108,13 +108,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addAsignaturaToStudent(Integer id_student, Integer id_asignatura) {
-        Student student = studentRepository.findById(id_student).orElseThrow(
-                () -> new EntityNotFoundException("No se ha encontrado el alumno con el id " + id_student)
+    public void addAsignaturaToStudent(Integer idStudent, Integer idAsignatura) {
+        Student student = studentRepository.findById(idStudent).orElseThrow(
+                () -> new EntityNotFoundException("No se ha encontrado el alumno con el id " + idStudent)
         );
 
-        Asignatura asignatura = asignaturaRepository.findById(id_asignatura).orElseThrow(
-                () -> new EntityNotFoundException("No se ha encontrado la asignatura con el id " + id_asignatura)
+        Asignatura asignatura = asignaturaRepository.findById(idAsignatura).orElseThrow(
+                () -> new EntityNotFoundException("No se ha encontrado la asignatura con el id " + idAsignatura)
         );
 
         student.getAsignatura().add(asignatura);
@@ -122,10 +122,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void asignarAsignaturasEstudiante(Integer id_student, List<Integer> asignaturasId){
+    public void asignarAsignaturasEstudiante(Integer idStudent, List<Integer> asignaturasId){
 
-        Student student = studentRepository.findById(id_student)
-                .orElseThrow(() -> new EntityNotFoundException("El estudiante con Id " + id_student + "no fue encontrado"));
+        Student student = studentRepository.findById(idStudent)
+                .orElseThrow(() -> new EntityNotFoundException("El estudiante con Id " + idStudent + "no fue encontrado"));
 
         List<Asignatura> asignaturas = asignaturaRepository.findAllById(asignaturasId);
 
@@ -135,10 +135,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void desasignarAsignaturasEstudiante(Integer id_student, List<Integer> asignaturasId){
+    public void desasignarAsignaturasEstudiante(Integer idStudent, List<Integer> asignaturasId){
 
-        Student student = studentRepository.findById(id_student)
-                .orElseThrow(() -> new EntityNotFoundException("El estudiante con Id " + id_student + "no fue encontrado"));
+        Student student = studentRepository.findById(idStudent)
+                .orElseThrow(() -> new EntityNotFoundException("El estudiante con Id " + idStudent + "no fue encontrado"));
 
         List<Asignatura> asignaturas = asignaturaRepository.findAllById(asignaturasId);
 

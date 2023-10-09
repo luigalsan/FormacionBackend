@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/profesor")
@@ -23,21 +24,20 @@ public class ProfesorController {
 
     //
     @PostMapping
-    public ResponseEntity<?> addProfesor(@RequestBody ProfesorInputDTO profesorInputDTO){
+    public ResponseEntity<ProfesorOutputDTO> addProfesor(@RequestBody ProfesorInputDTO profesorInputDTO){
         try{
-            profesorService.addProfesor(profesorInputDTO);
-            return ResponseEntity.ok().body(profesorInputDTO);
+           return ResponseEntity.ok().body(profesorService.addProfesor(profesorInputDTO));
+
         }catch(UnprocessableEntityException u){
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(u.getCustomError());
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, u.getMessage());
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProfesorById(@PathVariable Integer id){
+    public ResponseEntity<ProfesorOutputDTO> getProfesorById(@PathVariable Integer id){
         try{
             return ResponseEntity.ok().body(profesorService.getProfesorById(id));
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
-        }
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());         }
     }
     @GetMapping
     public Iterable<ProfesorOutputDTO> getAllProfesores(
@@ -47,16 +47,15 @@ public class ProfesorController {
         return profesorService.getAllProfesor(pageNumber, pageSize);
     }
     @PutMapping
-    public ResponseEntity<?> updateProfesor(@RequestBody ProfesorInputDTO profesorInputDTO){
+    public ResponseEntity<ProfesorOutputDTO> updateProfesor(@RequestBody ProfesorInputDTO profesorInputDTO){
         try{
             return ResponseEntity.ok().body(profesorService.updateProfesor(profesorInputDTO));
         }catch(EntityNotFoundException e){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
-        }
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProfesorById(@PathVariable Integer id){
+    public ResponseEntity<Object> deleteProfesorById(@PathVariable Integer id){
         try{
             profesorService.deleteProfessorById(id);
             return ResponseEntity.ok().body("Se ha eliminado el profesor con el id " + id);
@@ -65,11 +64,11 @@ public class ProfesorController {
         }
     }
     @PostMapping("/student")
-    public ResponseEntity<String> addStudentProfesor(@RequestParam Integer id_student, @RequestParam Integer id_profesor) {
+    public ResponseEntity<String> addStudentProfesor(@RequestParam Integer idStudent, @RequestParam Integer idProfesor) {
         try {
-            profesorService.addStudentToProfesor(id_student, id_profesor);
-            return ResponseEntity.ok().body("El estudiante con id " + id_student +
-                    "se agregó al profesor satisfactoriamente con id " + id_profesor);
+            profesorService.addStudentToProfesor(idStudent, idProfesor);
+            return ResponseEntity.ok().body("El estudiante con id " + idStudent +
+                    "se agregó al profesor satisfactoriamente con id " + idProfesor);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Ocurrió un fallo");
         }

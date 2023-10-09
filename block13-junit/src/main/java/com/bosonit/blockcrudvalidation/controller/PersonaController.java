@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/persona")
@@ -40,7 +41,7 @@ public class PersonaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findPersonById(@PathVariable Integer id, @RequestParam(value = "outputType", defaultValue = "default") String outputType) {
+    public ResponseEntity<Object> findPersonById(@PathVariable Integer id, @RequestParam(value = "outputType", defaultValue = "default") String outputType) {
         try{
             return ResponseEntity.ok().body(personaServiceImpl.getPersonaId(id,outputType));
         }catch(EntityNotFoundException e){
@@ -49,7 +50,7 @@ public class PersonaController {
     }
 
     @GetMapping("/usuario/{usuario}")
-    public ResponseEntity<?> findPersonByUsuario(@PathVariable String usuario, @RequestParam(value = "outputType", defaultValue = "default") String outputType) {
+    public ResponseEntity<Object> findPersonByUsuario(@PathVariable String usuario, @RequestParam(value = "outputType", defaultValue = "default") String outputType) {
         try{
             return ResponseEntity.ok().body(personaServiceImpl.getPersonaByUsuario(usuario,outputType));
         }catch(EntityNotFoundException e){
@@ -66,33 +67,32 @@ public class PersonaController {
     }
 
     @PostMapping
-    ResponseEntity<?> addPersona(@RequestBody PersonaInputDTO persona){
+    ResponseEntity<PersonaOutputDTO> addPersona(@RequestBody PersonaInputDTO persona){
         try {
-            personaServiceImpl.addPersona(persona);
-            return ResponseEntity.ok().body(persona);
+            return ResponseEntity.ok().body(personaServiceImpl.addPersona(persona));
+
         } catch (UnprocessableEntityException e) {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getCustomError());
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
         }
     }
 
 
     @PutMapping
-    public ResponseEntity<?> updatePersona(@RequestBody PersonaInputDTO persona) {
+    public ResponseEntity<PersonaOutputDTO> updatePersona(@RequestBody PersonaInputDTO persona) {
         try {
             personaServiceImpl.getPersonaId(persona.getIdPersona(),"default"); //Obtengo el Id del objeto persona en POJO previamente serializado desde un JSON
             return ResponseEntity.ok().body(personaServiceImpl.updatePersona(persona));
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
-        }
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePersona(@PathVariable Integer id) {
+    public ResponseEntity<String> deletePersona(@PathVariable Integer id) {
         try {
             personaServiceImpl.deletePersonaById(id);
             return ResponseEntity.ok().body("El usuario con id: " + id + " ha sido eliminada correctamente");
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 

@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class ProfesorServiceTest {
+class ProfesorServiceTest {
 
 
     @InjectMocks
@@ -50,7 +50,7 @@ public class ProfesorServiceTest {
     /*************************************** TESTEANDO addProfesor *****************************************************/
 
     @Test
-    public void testAddProfesor() {
+     void testAddProfesor() {
 
         ProfesorInputDTO inputDTO = new ProfesorInputDTO();
         inputDTO.setIdPersona(1);
@@ -74,7 +74,7 @@ public class ProfesorServiceTest {
     /*************************************** TESTEANDO getProfesorById *************************************************/
 
     @Test
-    public void testGetProfesorById(){
+     void testGetProfesorById(){
 
         Integer id = 1;
         Profesor profesor = new Profesor();
@@ -93,7 +93,7 @@ public class ProfesorServiceTest {
     }
 
     @Test
-    public void testGetProfesorById_NotFound(){
+     void testGetProfesorById_NotFound(){
         Integer studentIdNotFound = 1;
         when(profesorRepository.findById(studentIdNotFound)).thenReturn(Optional.empty());
 
@@ -107,7 +107,7 @@ public class ProfesorServiceTest {
     /**************************************** TESTEANDO getAllProfesor ************************************************/
 
     @Test
-    public void testGetAllProfesor() {
+     void testGetAllProfesor() {
         int pageNumber = 0;
         int pageSize = 10;
 
@@ -139,7 +139,7 @@ public class ProfesorServiceTest {
     /**************************************** TESTEANDO updateProfesor ************************************************/
 
     @Test
-    public void testUpdateStudent() {
+     void testUpdateStudent() {
         Integer idProfesor = 1;
         ProfesorInputDTO inputDTO = new ProfesorInputDTO();
         inputDTO.setIdProfesor(1);
@@ -166,7 +166,7 @@ public class ProfesorServiceTest {
     }
 
     @Test
-    public void testUpdateStudentNotFound() {
+     void testUpdateStudentNotFound() {
 
         Integer idProfesor = 1;
         ProfesorInputDTO inputDTO = new ProfesorInputDTO();
@@ -186,7 +186,7 @@ public class ProfesorServiceTest {
     /*************************************** TESTEANDO addStudentToProfesor *************************************************/
 
     @Test
-    public void testAddStudentToProfesor() {
+     void testAddStudentToProfesor() {
         Integer id_profesor = 1;
         Integer id_student = 2;
 
@@ -214,7 +214,7 @@ public class ProfesorServiceTest {
     /*************************************** TESTEANDO deleteProfesorById *************************************************/
 
     @Test
-    public void testDeleteProfesorById() {
+     void testDeleteProfesorById() {
         Integer idProfesor = 1;
 
         Profesor profesor = new Profesor();
@@ -228,7 +228,7 @@ public class ProfesorServiceTest {
     }
 
     @Test
-    public void testDeleteStudentByIdNotFound(){
+     void testDeleteStudentByIdNotFound(){
 
         Integer profesorId = 1;
 

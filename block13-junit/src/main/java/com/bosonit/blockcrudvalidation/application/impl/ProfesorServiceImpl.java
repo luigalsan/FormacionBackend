@@ -64,8 +64,8 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public Iterable<ProfesorOutputDTO> getAllProfesor(int pageNumber, int pageSize) {
-        PageRequest Page = PageRequest.of(pageNumber, pageSize);
-        return profesorRepository.findAll(Page).getContent().stream().map(Profesor::profesorToOutPutDto).toList();
+        PageRequest page = PageRequest.of(pageNumber, pageSize);
+        return profesorRepository.findAll(page).getContent().stream().map(Profesor::profesorToOutPutDto).toList();
     }
 
     @Override
@@ -80,11 +80,11 @@ public class ProfesorServiceImpl implements ProfesorService {
     }
 
     @Override
-    public void addStudentToProfesor(Integer id_student, Integer id_profesor) {
-        Student student = studentRepository.findById(id_student)
-                .orElseThrow(() -> new EntityNotFoundException("No se encuentra el estudiante con el id " + id_student));
-        Profesor profesor = profesorRepository.findById(id_profesor)
-                .orElseThrow(() -> new EntityNotFoundException("No se encontró el profesor con el id " + id_profesor));
+    public void addStudentToProfesor(Integer idStudent, Integer idProfesor) {
+        Student student = studentRepository.findById(idStudent)
+                .orElseThrow(() -> new EntityNotFoundException("No se encuentra el estudiante con el id " + idStudent));
+        Profesor profesor = profesorRepository.findById(idProfesor)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el profesor con el id " + idProfesor));
 
         student.setProfesor(profesor);
         profesor.getStudents().add(student);

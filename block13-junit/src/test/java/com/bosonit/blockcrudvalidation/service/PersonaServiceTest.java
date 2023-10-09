@@ -24,7 +24,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PersonaServiceTest {
+class PersonaServiceTest {
 
     @InjectMocks
     private PersonaServiceImpl personaService; //Esto permite hacer uso de los mock. En este caso, el repositorio "simulado" de la siguiente línea
@@ -40,7 +40,7 @@ public class PersonaServiceTest {
     /****************************************TESTEANDO addPersona******************************************************/
 
     @Test
-    public void testAddPersona() {
+     void testAddPersona() {
 // Configuración del inputDto con valores conocidos
         PersonaInputDTO inputDto = new PersonaInputDTO();
         inputDto.setUsuario("luis1991");
@@ -61,7 +61,7 @@ public class PersonaServiceTest {
 
     /****************************************TESTEANDO getPersonaById**************************************************/
     @Test
-    public void testGetPersonaById() {
+     void testGetPersonaById() {
         Integer idPersona = 1; // El ID que deseamos buscar
         Persona persona = new Persona();
         persona.setIdPersona(idPersona);
@@ -79,7 +79,7 @@ public class PersonaServiceTest {
     }
 
     @Test
-    public void testGetPersonaByIdNotFound() {
+     void testGetPersonaByIdNotFound() {
         Integer idPersona = 1;
         when(personaRepository.findById(idPersona)).thenReturn(Optional.empty());
 
@@ -95,7 +95,7 @@ public class PersonaServiceTest {
     /**************************************TESTEANDO getPersonaByUsuario*************************************************/
 
     @Test
-    public void testGetPersonaByUsuario_Student() {
+     void testGetPersonaByUsuario_Student() {
         String usuario = "alumno123";
         String param = "alumno";
 
@@ -116,7 +116,7 @@ public class PersonaServiceTest {
 
 
     @Test
-    public void testGetPersonaByUsuario_Profesor() {
+     void testGetPersonaByUsuario_Profesor() {
         String usuario = "profesor456";
         String param = "profesor";
 
@@ -136,7 +136,7 @@ public class PersonaServiceTest {
     }
 
     @Test
-    public void testGetPersonaByUsuario_Default() {
+     void testGetPersonaByUsuario_Default() {
         String usuario = "otrousuario";
         String param = "otro"; // Valor por defecto
 
@@ -159,7 +159,7 @@ public class PersonaServiceTest {
 
 
     @Test
-    public void testUpdatePersona() {
+     void testUpdatePersona() {
         // Configurar el comportamiento esperado del repositorio simulado
         Integer idPersona = 1; // El ID que deseamos actualizar
         PersonaInputDTO inputDTO = new PersonaInputDTO();
@@ -199,7 +199,7 @@ public class PersonaServiceTest {
 
 
     @Test
-    public void testUpdatePersonaNotFound() {
+     void testUpdatePersonaNotFound() {
         // Configurar el comportamiento esperado del repositorio simulado
         Integer idPersona = 1; // El ID que deseamos actualizar
         PersonaInputDTO inputDTO = new PersonaInputDTO();
@@ -225,7 +225,7 @@ public class PersonaServiceTest {
     /**************************************TESTEANDO deletePersonaById*************************************************/
 
     @Test
-    public void testDeletePersonaById() {
+     void testDeletePersonaById() {
         // Configurar el comportamiento esperado del repositorio simulado
         Integer idPersona = 1; // El ID que deseamos eliminar
 
@@ -245,7 +245,7 @@ public class PersonaServiceTest {
     }
 
     @Test
-    public void testDeletePersonaByIdNotFound(){
+     void testDeletePersonaByIdNotFound(){
 
         //Configurar el comportamiento esperado del repositorio simulado
         Integer idPersona = 1;
@@ -263,7 +263,7 @@ public class PersonaServiceTest {
     /**************************************TESTEANDO getAllPersonas*************************************************/
 
     @Test
-    public void testGetAllPersonas() {
+     void testGetAllPersonas() {
         // Configurar el comportamiento esperado del repositorio simulado
         int pageNumber = 0;
         int pageSize = 10;

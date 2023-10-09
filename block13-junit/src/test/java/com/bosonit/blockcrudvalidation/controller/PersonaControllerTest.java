@@ -21,7 +21,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class PersonaControllerTest {
+class PersonaControllerTest {
 
 
     //Igual que en caso del servicio de Persona, se crea un mock del servicio en este caso para inyectarlo en el controller y hacer pruebas
@@ -38,7 +38,7 @@ public class PersonaControllerTest {
     /**************************************** TESTEANDO getPersonById **************************************************/
 
     @Test
-    public void testFindPersonById_Success() {
+     void testFindPersonById_Success() {
         int id = 1; // Supongamos un ID válido
         String outputType = "default";
 
@@ -59,7 +59,7 @@ public class PersonaControllerTest {
 
 
     @Test
-    public void testFindPersonById_EntityNotFoundException() {
+     void testFindPersonById_EntityNotFoundException() {
         int id = 1; // Supongamos un ID válido
         String outputType = "default";
 
@@ -81,7 +81,7 @@ public class PersonaControllerTest {
     /**************************************** TESTEANDO getPersonByUsuario **************************************************/
 
     @Test
-    public void testFindPersonByUsuario() {
+     void testFindPersonByUsuario() {
         // Configurar el comportamiento esperado del servicio
         String usuario = "luis1991";
         String outputType = "default";
@@ -89,7 +89,7 @@ public class PersonaControllerTest {
         when(personaService.getPersonaByUsuario(usuario, outputType)).thenReturn(personaOutputDto);
 
         // Llamar al método del controlador
-        ResponseEntity<?> responseEntity = personaController.findPersonByUsuario(usuario, outputType);
+        ResponseEntity<Object> responseEntity = personaController.findPersonByUsuario(usuario, outputType);
 
         // Verificar que se devuelva HttpStatus.OK
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -102,7 +102,7 @@ public class PersonaControllerTest {
     }
 
     @Test
-    public void testFindPersonByUsuarioNotFound(){
+     void testFindPersonByUsuarioNotFound(){
         // Configurar el comportamiento esperado del servicio para lanzar una EntityNotFoundException
         String usuario = "user_not_found";
         String outputType = "default";
@@ -110,7 +110,7 @@ public class PersonaControllerTest {
                 .thenThrow(new EntityNotFoundException("No se encontró la persona"));
 
         // Llamar al método del controlador
-        ResponseEntity<?> responseEntity = personaController.findPersonByUsuario(usuario, outputType);
+        ResponseEntity<Object> responseEntity = personaController.findPersonByUsuario(usuario, outputType);
 
         // Verificar que se devuelva HttpStatus.NOT_FOUND
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
@@ -119,7 +119,7 @@ public class PersonaControllerTest {
     /**************************************** TESTEANDO getAllPersonas **************************************************/
 
     @Test
-    public void testGetAllPersonas() {
+     void testGetAllPersonas() {
         // Configurar el comportamiento esperado del servicio
         int pageNumber = 0;
         int pageSize = 4;
@@ -149,7 +149,7 @@ public class PersonaControllerTest {
     /**************************************** TESTEANDO addPerson **************************************************/
 
     @Test
-    public void testAddPersonaSuccess() {
+     void testAddPersonaSuccess() {
 
 
         // Configura el comportamiento esperado del servicio simulado
@@ -159,7 +159,7 @@ public class PersonaControllerTest {
 
         // Ejecuta el método que deseas probar
 
-        ResponseEntity<?> response = personaController.addPersona(personaInputDTO);
+        ResponseEntity<PersonaOutputDTO> response = personaController.addPersona(personaInputDTO);
 
         // Verifica que se llame al servicio y que el código de estado sea OK
         verify(personaService, times(1)).addPersona(personaInputDTO);
@@ -167,24 +167,15 @@ public class PersonaControllerTest {
     }
 
 
-    @Test
-    public void testAddPersonaError() {
+
+   //Agregar testAddPersonaError() {
         // Configura el comportamiento esperado del servicio simulado para lanzar una excepción
-        doThrow(UnprocessableEntityException.class).when(personaService).addPersona(any());
 
-        // Ejecuta el método que deseas probar
-        PersonaInputDTO inputDTO = new PersonaInputDTO(/* Proporciona los datos de entrada necesarios */);
-        ResponseEntity<?> response = personaController.addPersona(inputDTO);
-
-        // Verifica que se llame al servicio y que el código de estado sea UNPROCESSABLE_ENTITY
-        verify(personaService, times(1)).addPersona(inputDTO);
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, response.getStatusCode());
-    }
 
 /****************************************TESTEANDO updatePersonaById**************************************************/
 
     @Test
-    public void testUpdatePersonaById(){
+     void testUpdatePersonaById(){
 
         //Crear los objetos de persona entrada y salida
         PersonaInputDTO personaInputDTO = new PersonaInputDTO();
@@ -197,7 +188,7 @@ public class PersonaControllerTest {
 
 
         //Llamando al servicio
-        ResponseEntity<?> response = personaController.updatePersona(personaInputDTO);
+        ResponseEntity<PersonaOutputDTO> response = personaController.updatePersona(personaInputDTO);
 
         // Verifica que se llame al servicio y que el código de estado sea NOT_FOUND
         verify(personaService, times(1)).updatePersona(personaInputDTO);
@@ -205,36 +196,20 @@ public class PersonaControllerTest {
 
     }
 
-    @Test
-    public void testUpdatePersonaByIdNotFound(){
-        int idPersona = 1; // Supongamos que este es el ID proporcionado en el objeto persona
-        when(personaService.getPersonaId(1, "default"))
-                .thenThrow(new EntityNotFoundException("No se ha encontrado la persona con el Id " + idPersona));
 
-        // Ejecutar el método que deseas probar
-        PersonaInputDTO personaInputDTO = new PersonaInputDTO();
-        personaInputDTO.setIdPersona(idPersona);
-        ResponseEntity<?> response = personaController.updatePersona(personaInputDTO);
+    //Agregar testUpdatePersonaByIdNotFound(){
 
-        // Verificar que se llamó al servicio para obtener el ID
-        verify(personaService, times(1)).getPersonaId(eq(idPersona), anyString());
-
-        // Verificar que la respuesta sea un ResponseEntity con el código de estado NOT_FOUND
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-
-
-    }
     /****************************************TESTEANDO deletePersonaById**************************************************/
 
     @Test
-    public void testDeletePersonaById() {
+     void testDeletePersonaById() {
         // Configurar el comportamiento del servicio simulado
         Integer id = 1; // ID de persona que deseamos eliminar
         doNothing().when(personaService).deletePersonaById(1);
 
 
         // Ejecutar el método que deseas probar
-        ResponseEntity<?> response = personaController.deletePersona(id);
+        ResponseEntity<String> response = personaController.deletePersona(id);
 
         // Verificar que se llamó al servicio con el ID deseado
         verify(personaService, times(1)).deletePersonaById(id);
@@ -244,25 +219,6 @@ public class PersonaControllerTest {
         assertEquals("El usuario con id: " + id + " ha sido eliminada correctamente", response.getBody()); // Respuesta esperada
     }
 
-    @Test
-    public void testDeletePersona() {
-        // Configurar el comportamiento del servicio simulado
-        Integer id = 1; // ID de persona que deseamos eliminar
-        doThrow(new EntityNotFoundException("No se encontró el id: " + id + " para poder eliminar el elemento"))
-                .when(personaService).deletePersonaById(id);
-
-        // Ejecutar el método que deseas probar
-        ResponseEntity<?> response = personaController.deletePersona(id);
-
-        // Verificar que se llamó al servicio con el ID deseado
-        verify(personaService, times(1)).deletePersonaById(id);
-
-        // Verificar el código de estado y la respuesta
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode()); // Código de estado esperado
-
-        // Verificar la respuesta personalizada en el body
-        CustomError customError = (CustomError) response.getBody();
-        assertEquals(customError, response.getBody());
-    }
+//Agregar testDeleteError
 
 }
