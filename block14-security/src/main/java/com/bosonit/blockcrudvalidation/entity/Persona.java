@@ -6,22 +6,28 @@ import com.bosonit.blockcrudvalidation.controller.dto.Persona.PersonaProfesorOut
 import com.bosonit.blockcrudvalidation.controller.dto.Persona.PersonaStudentOutputDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "persona")
-public class Persona {
+public class Persona implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id_persona;
     @Column(nullable = false)
-    private String usuario;
+    private String username;
     @Column(nullable = false)
     private String password;
     @Column(name = "nombre", nullable = false)
@@ -50,9 +56,12 @@ public class Persona {
     @OneToOne
     private Profesor profesor;
 
+    @Enumerated(EnumType.STRING)
+    Role role;
+
     public Persona(PersonaInputDTO personaInputDTO){
         this.id_persona = personaInputDTO.getId_persona();
-        this.usuario = personaInputDTO.getUsuario();
+        this.username = personaInputDTO.getUsername();
         this.password = personaInputDTO.getPassword();
         this.name = personaInputDTO.getName();
         this.surname = personaInputDTO.getSurname();
@@ -63,6 +72,7 @@ public class Persona {
         this.created_date = personaInputDTO.getCreated_date();
         this.imagen_url = personaInputDTO.getImagen_url();
         this.termination_date = personaInputDTO.getTermination_date();
+        this.role = personaInputDTO.getRole();
 
     }
 
@@ -70,7 +80,7 @@ public class Persona {
 
         return new PersonaOutputDTO(
             this.id_persona,
-            this.name,
+            this.username,
             this.surname,
             this.company_email,
             this.personal_email,
@@ -78,7 +88,8 @@ public class Persona {
             this.active,
             this.created_date,
             this.imagen_url,
-            this.termination_date
+            this.termination_date,
+                this.role
         );
     }
 
@@ -120,4 +131,32 @@ public class Persona {
                 this.profesor.getBranch()
         );
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority((role.name())));
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }

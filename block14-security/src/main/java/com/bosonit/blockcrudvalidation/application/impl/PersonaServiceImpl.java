@@ -20,10 +20,10 @@ public class PersonaServiceImpl implements PersonaService {
     @Override
     public PersonaOutputDTO addPersona(PersonaInputDTO persona) {
         //Comprobar que los campos insertados en persona están bien
-        if(persona.getUsuario() == null || persona.getUsuario().isEmpty())
+        if(persona.getUsername() == null || persona.getUsername().isEmpty())
             throw new UnprocessableEntityException("Inserte usuario, por favor");
 
-        else if(persona.getUsuario().length() > 10 || persona.getUsuario().length() < 6)
+        else if(persona.getUsername().length() > 10 || persona.getUsername().length() < 6)
             throw new UnprocessableEntityException("El usuario debe tener entre 10 y 6 caracteres");
 
         else if(persona.getName() == null || persona.getName().isEmpty())
@@ -48,7 +48,7 @@ public class PersonaServiceImpl implements PersonaService {
         //Comprobar si existe el usuario en la base de datos o no
 
         //Esto podría ahorrarmelo porque ya existe un método que lo comprueba
-       boolean existe = personaRepository.findAll().stream().anyMatch(p -> p.getUsuario().equals(persona.getUsuario()));
+       boolean existe = personaRepository.findAll().stream().anyMatch(p -> p.getUsername().equals(persona.getUsername()));
        if(!existe){
            return personaRepository.save(new Persona(persona)).personaToPersonaOutputDto();
        }
@@ -78,19 +78,19 @@ public class PersonaServiceImpl implements PersonaService {
         switch(param){
             case "alumno":
                 return personaRepository.findAll().stream()
-                        .filter(persona -> persona.getUsuario()
+                        .filter(persona -> persona.getUsername()
                                 .equals(usuario)).findFirst()
                         .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario: " + usuario))
                         .personaToPersonaStudentDto();
             case "profesor":
                 return personaRepository.findAll().stream()
-                        .filter(persona -> persona.getUsuario()
+                        .filter(persona -> persona.getUsername()
                                 .equals(usuario)).findFirst()
                         .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario: " + usuario))
                         .personaToPersonaProfesorDto();
             default:
                 return personaRepository.findAll().stream()
-                        .filter(persona -> persona.getUsuario()
+                        .filter(persona -> persona.getUsername()
                                 .equals(usuario)).findFirst()
                         .orElseThrow(() -> new EntityNotFoundException("No se encontró el usuario: " + usuario))
                         .personaToPersonaOutputDto();
@@ -114,7 +114,7 @@ public class PersonaServiceImpl implements PersonaService {
 
         persona.setName(personaInputDTO.getName());
         persona.setSurname(personaInputDTO.getSurname());
-        persona.setUsuario(personaInputDTO.getUsuario());
+        persona.setUsername(personaInputDTO.getUsername());
         persona.setPassword(personaInputDTO.getPassword());
         persona.setCompany_email(personaInputDTO.getCompany_email());
         persona.setPersonal_email(personaInputDTO.getPersonal_email());

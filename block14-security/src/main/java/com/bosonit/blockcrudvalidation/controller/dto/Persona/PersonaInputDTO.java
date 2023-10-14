@@ -1,6 +1,7 @@
 package com.bosonit.blockcrudvalidation.controller.dto.Persona;
 
 
+import com.bosonit.blockcrudvalidation.entity.Role;
 import lombok.*;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.Date;
 public class PersonaInputDTO {
 
     private Integer id_persona;
-    private String usuario;
+    private String username;
     private String password;
     private String name;
     private String surname;
@@ -23,6 +24,7 @@ public class PersonaInputDTO {
     private Date created_date;
     private String imagen_url;
     private Date termination_date;
+    private Role role;
 
 }
 
