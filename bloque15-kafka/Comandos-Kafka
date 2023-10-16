@@ -1,0 +1,20 @@
+# Iniciar ZooKeeper
+./bin/zookeeper-server-start.sh ./config/zookeeper.properties
+
+# Iniciar Kafka
+./bin/kafka-server-start.sh ./config/server.properties
+
+# Crear un nuevo tópico en el servidor de Kafka
+./bin/kafka-topics.sh --create --topic {nombre-del-topico} --bootstrap-server {host}:9092
+
+# Describir los detalles de un tópico
+./bin/kafka-topics.sh --describe --topic {nombre-del-topico} --bootstrap-server {host}:9092
+
+# Listar todos los tópicos que existen dentro del broker
+./bin/kafka-topics.sh --list --bootstrap-server {host}:9092
+
+# Iniciar una consola para ver mensajes de un tópico específico
+./bin/kafka-console-consumer.sh --topic {nombre-del-topico} --bootstrap-server {host}:9092
+
+# Iniciar una consola para enviar mensajes a un tópico específico
+./bin/kafka-console-producer.sh --broker-list {host}:9092 --topic {nombre-del-topico}
