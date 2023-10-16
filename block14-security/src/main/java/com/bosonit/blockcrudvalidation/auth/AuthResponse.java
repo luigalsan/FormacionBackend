@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 
 public class AuthResponse {
     String token;
-    String username; // Agregar el atributo username
+
 }

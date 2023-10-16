@@ -33,13 +33,12 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest request){
         UserDetails user = personRepository.findByUsername(request.getUsername()).orElseThrow(
-                () -> new UsernameNotFoundException("User not found")
+                () -> new UsernameNotFoundException("Usuario no encontrado")
         );
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
         String token=jwtService.getToken(user);
         return AuthResponse.builder()
                 .token(token)
-                .username(user.getUsername())
                 .build();
     }
 
