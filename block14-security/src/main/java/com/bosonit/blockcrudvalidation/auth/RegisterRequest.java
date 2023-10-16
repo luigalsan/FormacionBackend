@@ -11,6 +11,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class RegisterRequest {
     String username;
     String password;

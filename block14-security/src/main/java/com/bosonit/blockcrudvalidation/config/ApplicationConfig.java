@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class ApplicationConfig {
 
     @Autowired
-    private PersonaRepository personaRepository;
+    PersonaRepository personaRepository;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception

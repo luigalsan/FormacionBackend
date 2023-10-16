@@ -13,6 +13,8 @@ public class PersonaOutputDTO {
 
     private Integer id_persona;
     private String username;
+    private String password;
+    private String name;
     private String surname;
     private String company_email;
     private String personal_email;

@@ -1,5 +1,6 @@
 package com.bosonit.blockcrudvalidation.auth;
 
+
 import com.bosonit.blockcrudvalidation.config.ApplicationConfig;
 import com.bosonit.blockcrudvalidation.entity.Persona;
 import com.bosonit.blockcrudvalidation.entity.Role;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,30 +18,36 @@ import org.springframework.stereotype.Service;
 public class AuthService {
 
     @Autowired
-    private  PersonaRepository personaRepository;
+    PersonaRepository personRepository;
+
     @Autowired
-    private JwtService jwtService;
+    JwtService jwtService;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     @Autowired
     ApplicationConfig applicationConfig;
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
-    public AuthResponse login(LoginRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        UserDetails user=personaRepository.findByUsername(request.getUsername()).orElseThrow();
+
+
+    public AuthResponse login(LoginRequest request){
+        UserDetails user = personRepository.findByUsername(request.getUsername()).orElseThrow(
+                () -> new UsernameNotFoundException("User not found")
+        );
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
         String token=jwtService.getToken(user);
         return AuthResponse.builder()
                 .token(token)
+                .username(user.getUsername())
                 .build();
-
     }
 
-    public AuthResponse register(RegisterRequest request, boolean isAdmin) {
+    public AuthResponse register(RegisterRequest request, boolean isAdmin){
         String encryptedPassword = applicationConfig.passwordEncoder().encode(request.getPassword());
         Role role = Role.USER;
         if (isAdmin) role = Role.ADMIN;
-        Persona persona = Persona.builder()
+        Persona person = Persona.builder()
                 .username(request.getUsername())
                 .password(encryptedPassword)
                 .name(request.getName())
@@ -53,12 +61,10 @@ public class AuthService {
                 .termination_date(request.getTermination_date())
                 .role(role)
                 .build();
-        personaRepository.save(persona);
+        personRepository.save(person);
 
         return AuthResponse.builder()
-                .token(jwtService.getToken(persona))
+                .token(jwtService.getToken(person))
                 .build();
-
     }
-
 }

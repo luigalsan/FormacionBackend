@@ -10,6 +10,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class PersonaProfesorOutputDto {
     private Integer id_persona;
+    private String username;
+    private String password;
     private String name;
     private String surname;
     private String company_email;

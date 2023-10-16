@@ -1,9 +1,10 @@
 package com.bosonit.blockcrudvalidation.jwt;
 
-import com.bosonit.blockcrudvalidation.entity.Persona;
-import org.bouncycastle.jcajce.BCFKSLoadStoreParameter;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
-import org.springframework.core.codec.Decoder;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +12,6 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.function.Function;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 
@@ -33,8 +29,8 @@ public class JwtService {
                 .setClaims(extractClaims)
                 .setSubject(person.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
-                .signWith(getKey(), SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + 1000*60*24))
+                .signWith(getKey(),SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -74,4 +70,3 @@ public class JwtService {
         return claimsTFunction.apply(claims);
     }
 }
-

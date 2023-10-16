@@ -20,7 +20,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "persona")
+@Table(name = "persona", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"})})
 public class Persona implements UserDetails {
 
     @Id
@@ -28,27 +28,18 @@ public class Persona implements UserDetails {
     private Integer id_persona;
     @Column(nullable = false)
     private String username;
-    @Column(nullable = false)
     private String password;
-    @Column(name = "nombre", nullable = false)
     private String name;
-    @Column(name = "apellido")
     private String surname;
-    @Column(name = "email_compania", nullable = false)
     private String company_email;
-    @Column(name = "email_personal", nullable = false)
     private String personal_email;
-    @Column(name = "ciudad", nullable = false)
     private String city;
-    @Column(nullable = false)
     private boolean active;
-    @Temporal(TemporalType.DATE)
-    @Column(name="fecha_creacion", nullable = false)
     private Date created_date;
     private String imagen_url;
-    @Temporal(TemporalType.DATE)
-    @Column(name="fecha_terminacion")
     private Date termination_date;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToOne
     private Student student;
@@ -56,11 +47,8 @@ public class Persona implements UserDetails {
     @OneToOne
     private Profesor profesor;
 
-    @Enumerated(EnumType.STRING)
-    Role role;
 
     public Persona(PersonaInputDTO personaInputDTO){
-        this.id_persona = personaInputDTO.getId_persona();
         this.username = personaInputDTO.getUsername();
         this.password = personaInputDTO.getPassword();
         this.name = personaInputDTO.getName();
@@ -81,6 +69,8 @@ public class Persona implements UserDetails {
         return new PersonaOutputDTO(
             this.id_persona,
             this.username,
+            this.password,
+            this.name,
             this.surname,
             this.company_email,
             this.personal_email,
@@ -98,6 +88,8 @@ public class Persona implements UserDetails {
     public PersonaStudentOutputDto personaToPersonaStudentDto(){
         return new PersonaStudentOutputDto(
                 this.id_persona,
+                this.username,
+                this.password,
                 this.name,
                 this.surname,
                 this.company_email,
@@ -117,6 +109,8 @@ public class Persona implements UserDetails {
     public PersonaProfesorOutputDto personaToPersonaProfesorDto(){
         return new PersonaProfesorOutputDto(
                 this.id_persona,
+                this.username,
+                this.password,
                 this.name,
                 this.surname,
                 this.company_email,

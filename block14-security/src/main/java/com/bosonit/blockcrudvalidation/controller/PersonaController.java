@@ -95,4 +95,9 @@ public class PersonaController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getCustomError());
         }
     }
+
+    @GetMapping("/hello")
+    public String hello(){
+        return "accediendo con el token";
+    }
 }
