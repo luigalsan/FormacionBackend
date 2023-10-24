@@ -1,0 +1,25 @@
+version: '3'
+services:
+  eureka-naming-server:
+    build:
+      context: C:\Users\luismiguel.gallego\IdeaProjects\FormacionBackend\block16-spring-cloud\eureka-naming-server\
+    ports:
+      - "8761:8761"
+
+  spring-cloud-backend:
+    build:
+      context: C:\Users\luismiguel.gallego\IdeaProjects\FormacionBackend\block16-spring-cloud\spring-cloud-backend\
+    ports:
+      - "8081:8081"
+
+  spring-cloud-frontend:
+    build:
+      context: C:\Users\luismiguel.gallego\IdeaProjects\FormacionBackend\block16-spring-cloud\spring-cloud-backend-Frontend\
+    ports:
+      - "8082:8082"
+
+  spring-cloud-gateway:
+    build:
+      context: C:\Users\luismiguel.gallego\IdeaProjects\FormacionBackend\block16-spring-cloud\spring-cloud-gateway\
+    ports:
+      - "8083:8083"
