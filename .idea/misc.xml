@@ -19,6 +19,7 @@
         <option value="$PROJECT_DIR$/block7-crud/pom.xml" />
         <option value="$PROJECT_DIR$/block7-crud-validation/pom.xml" />
         <option value="$PROJECT_DIR$/block10-dockerize-app/pom.xml" />
+        <option value="$PROJECT_DIR$/block13-mongodb/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
